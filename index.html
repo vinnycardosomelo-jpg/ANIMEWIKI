@@ -1,0 +1,4791 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANIMEWIKI</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#08090d;
+    color:#fff;
+    transition:.25s;
+}
+
+body.light{
+    background:#f3f3f5;
+    color:#111;
+}
+
+.topbar{
+    height:64px;
+    display:flex;
+    align-items:center;
+    padding:0 22px;
+    border-bottom:1px solid #22252e;
+    background:#090a0f;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+body.light .topbar{
+    background:#fff;
+    border-color:#ddd;
+}
+
+.left-menu{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.menu-btn,
+.home-btn,
+.questions-btn,
+.search-btn{
+    border:0;
+    background:transparent;
+    color:#fff;
+    cursor:pointer;
+}
+
+.menu-btn{
+    font-size:20px;
+    padding:8px;
+    border-radius:8px;
+}
+
+.home-btn{
+    font-size:15px;
+    padding:8px;
+}
+
+.questions-btn{
+    font-size:15px;
+    padding:8px;
+    border-radius:8px;
+}
+
+body.light .menu-btn,
+body.light .home-btn,
+body.light .questions-btn,
+body.light .search-btn{
+    color:#111;
+}
+
+.menu-btn:hover,
+.home-btn:hover,
+.questions-btn:hover{
+    background:#20222a;
+}
+
+.logo{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.search-area{
+    margin-left:auto;
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.search-input{
+    width:0;
+    opacity:0;
+    border:0;
+    outline:none;
+    border-radius:8px;
+    padding:0;
+    transition:.25s;
+}
+
+.search-area.open .search-input{
+    width:190px;
+    opacity:1;
+    padding:9px 12px;
+}
+
+.search-btn{
+    font-size:20px;
+}
+
+.settings{
+    position:fixed;
+    top:72px;
+    left:15px;
+    width:220px;
+    padding:15px;
+    background:#111319;
+    border:1px solid #292d38;
+    border-radius:12px;
+    display:none;
+    z-index:200;
+    box-shadow:0 12px 35px #0009;
+}
+
+.settings.open{
+    display:block;
+}
+
+body.light .settings{
+    background:#fff;
+    border-color:#ddd;
+}
+
+.settings h3{
+    margin-bottom:10px;
+}
+
+.settings button{
+    width:100%;
+    margin-top:7px;
+    padding:10px;
+    border:0;
+    border-radius:8px;
+    background:#20232c;
+    color:#fff;
+    cursor:pointer;
+}
+
+body.light .settings button{
+    background:#eee;
+    color:#111;
+}
+
+.hero{
+    max-width:1450px;
+    min-height:270px;
+    margin:auto;
+    padding:25px 35px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    overflow:hidden;
+}
+
+.brand{
+    width:39%;
+    min-width:300px;
+    position:relative;
+    z-index:5;
+}
+
+.brand h1{
+    font-size:clamp(45px,6vw,82px);
+    line-height:.88;
+    letter-spacing:-5px;
+    font-weight:1000;
+}
+
+.brand p{
+    margin-top:17px;
+    color:#999;
+    max-width:440px;
+    line-height:1.5;
+}
+
+body.light .brand p{
+    color:#666;
+}
+
+.decoration{
+    flex:1;
+    height:245px;
+    position:relative;
+    overflow:hidden;
+    pointer-events:none;
+
+    mask-image:linear-gradient(
+        to right,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+    );
+
+    -webkit-mask-image:linear-gradient(
+        to right,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+    );
+}
+
+.decoration img{
+    position:absolute;
+    object-fit:cover;
+    border:0;
+    outline:0;
+    border-radius:0;
+    box-shadow:none;
+    opacity:.48;
+    filter:blur(2.5px);
+    mix-blend-mode:screen;
+}
+
+.deco1{
+    width:175px;
+    height:190px;
+    left:0;
+    top:20px;
+    transform:rotate(-8deg);
+}
+
+.deco2{
+    width:180px;
+    height:195px;
+    left:125px;
+    top:0;
+    transform:rotate(6deg);
+}
+
+.deco3{
+    width:180px;
+    height:190px;
+    left:260px;
+    top:25px;
+    transform:rotate(-5deg);
+}
+
+.deco4{
+    width:175px;
+    height:195px;
+    left:395px;
+    top:3px;
+    transform:rotate(7deg);
+}
+
+.deco5{
+    width:175px;
+    height:185px;
+    left:525px;
+    top:28px;
+    transform:rotate(-6deg);
+}
+
+.container{
+    max-width:1450px;
+    margin:auto;
+    padding:0 35px 60px;
+}
+
+.section-title{
+    margin:22px 0 18px;
+    font-size:26px;
+}
+
+.anime-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fill,minmax(220px,1fr));
+    gap:18px;
+}
+
+.anime-card{
+    background:#111319;
+    border:1px solid #242832;
+    border-radius:14px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:.2s;
+}
+
+body.light .anime-card{
+    background:#fff;
+    border-color:#ddd;
+}
+
+.anime-card:hover{
+    transform:translateY(-5px);
+    border-color:#777;
+}
+
+.anime-cover{
+    width:100%;
+    height:135px;
+    object-fit:cover;
+    display:block;
+    background:#17191f;
+}
+
+.anime-info{
+    padding:13px;
+}
+
+.anime-name{
+    font-size:17px;
+    font-weight:800;
+}
+
+.anime-meta{
+    color:#888;
+    font-size:12px;
+    margin-top:6px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.back{
+    margin-bottom:20px;
+    padding:10px 15px;
+    border:0;
+    border-radius:9px;
+    background:#191b22;
+    color:#fff;
+    cursor:pointer;
+}
+
+body.light .back{
+    background:#ddd;
+    color:#111;
+}
+
+.anime-header{
+    display:flex;
+    gap:25px;
+    margin-bottom:30px;
+}
+
+.anime-cover-big{
+    width:300px;
+    height:185px;
+    object-fit:cover;
+    border-radius:14px;
+    background:#15171d;
+}
+
+.anime-description h1{
+    font-size:38px;
+    margin-bottom:12px;
+}
+
+.anime-description p{
+    color:#aaa;
+    line-height:1.6;
+    max-width:800px;
+}
+
+body.light .anime-description p{
+    color:#555;
+}
+
+.tags{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:15px;
+}
+
+.tag{
+    padding:6px 11px;
+    background:#20232c;
+    border-radius:20px;
+    font-size:12px;
+}
+
+body.light .tag{
+    background:#e2e2e2;
+}
+
+.seasons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:15px;
+}
+
+.season-btn{
+    border:0;
+    border-radius:8px;
+    padding:10px 15px;
+    background:#20232c;
+    color:#fff;
+    cursor:pointer;
+}
+
+.season-btn:hover{
+    background:#333743;
+}
+
+.season-btn.active{
+    background:#fff;
+    color:#000;
+}
+
+body.light .season-btn{
+    background:#ddd;
+    color:#111;
+}
+
+body.light .season-btn.active{
+    background:#111;
+    color:#fff;
+}
+
+.episodes{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fill,minmax(115px,1fr));
+    gap:10px;
+    margin-bottom:35px;
+}
+
+.episode{
+    padding:13px;
+    text-align:center;
+    border-radius:9px;
+    background:#15171d;
+    border:1px solid #252934;
+    cursor:pointer;
+    transition:.15s;
+}
+
+.episode:hover{
+    transform:translateY(-2px);
+    border-color:#888;
+    background:#1d2028;
+}
+
+body.light .episode{
+    background:#fff;
+    border-color:#ddd;
+}
+
+.characters{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fill,minmax(190px,1fr));
+    gap:15px;
+}
+
+.character-card{
+    overflow:hidden;
+    border-radius:12px;
+    background:#111319;
+    border:1px solid #242731;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.character-card:hover{
+    transform:translateY(-5px);
+    border-color:#777;
+}
+
+body.light .character-card{
+    background:#fff;
+    border-color:#ddd;
+}
+
+.character-card img{
+    width:100%;
+    height:230px;
+    object-fit:cover;
+    display:block;
+}
+
+.character-name{
+    padding:12px;
+    font-weight:bold;
+}
+
+.character-page{
+    display:none;
+}
+
+.character-page.active{
+    display:block;
+}
+
+.character-big{
+    display:flex;
+    gap:30px;
+    align-items:flex-start;
+}
+
+.character-big img{
+    width:280px;
+    height:400px;
+    object-fit:cover;
+    border-radius:14px;
+    background:#15171d;
+    flex-shrink:0;
+}
+
+.character-text{
+    flex:1;
+}
+
+.character-text h1{
+    font-size:38px;
+    margin-bottom:15px;
+}
+
+.character-text p{
+    max-width:800px;
+    color:#aaa;
+    line-height:1.7;
+    white-space:pre-line;
+}
+
+body.light .character-text p{
+    color:#555;
+}
+
+.info{
+    margin-top:22px;
+    display:grid;
+    grid-template-columns:
+        repeat(2,minmax(250px,1fr));
+    gap:10px;
+    max-width:900px;
+}
+
+.info-item{
+    padding:12px 14px;
+    background:#111319;
+    border:1px solid #242731;
+    border-radius:10px;
+    line-height:1.5;
+}
+
+body.light .info-item{
+    background:#fff;
+    border-color:#ddd;
+}
+
+.info-item b{
+    display:block;
+    margin-bottom:4px;
+    font-size:13px;
+    color:#999;
+}
+
+.info-item span{
+    font-size:15px;
+}
+
+.character-about{
+    margin-top:35px;
+}
+
+.character-about h2{
+    font-size:25px;
+    margin-bottom:12px;
+}
+
+.character-about p{
+    max-width:1000px;
+    color:#aaa;
+    line-height:1.7;
+    white-space:pre-line;
+}
+
+body.light .character-about p{
+    color:#555;
+}
+
+.character-anime-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:15px;
+}
+
+.character-anime-tag{
+    padding:8px 12px;
+    background:#20232c;
+    border-radius:20px;
+    font-size:13px;
+}
+
+body.light .character-anime-tag{
+    background:#e2e2e2;
+}
+
+.character-loading{
+    padding:20px;
+    color:#888;
+}
+
+
+/* =========================================================
+   ÁREA DE PERGUNTAS — ADICIONADO
+========================================================= */
+
+.questions-container{
+    max-width:950px;
+    margin:0 auto;
+    padding-top:20px;
+}
+
+.questions-title{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.questions-subtitle{
+    color:#999;
+    line-height:1.6;
+    margin-bottom:25px;
+}
+
+.question-box{
+    display:flex;
+    gap:10px;
+    width:100%;
+}
+
+.question-input{
+    flex:1;
+    padding:14px 16px;
+    border-radius:10px;
+    border:1px solid #292d38;
+    outline:none;
+    background:#111319;
+    color:#fff;
+    font-size:16px;
+}
+
+.question-input:focus{
+    border-color:#777;
+}
+
+body.light .question-input{
+    background:#fff;
+    color:#111;
+    border-color:#ddd;
+}
+
+.question-button{
+    padding:0 20px;
+    border:0;
+    border-radius:10px;
+    background:#20232c;
+    color:#fff;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.question-button:hover{
+    background:#333743;
+}
+
+body.light .question-button{
+    background:#ddd;
+    color:#111;
+}
+
+.question-answer{
+    margin-top:18px;
+    min-height:80px;
+    padding:18px;
+    border-radius:12px;
+    background:#111319;
+    border:1px solid #242731;
+    color:#fff;
+    line-height:1.7;
+}
+
+body.light .question-answer{
+    background:#fff;
+    color:#111;
+    border-color:#ddd;
+}
+
+.question-answer strong{
+    color:#fff;
+}
+
+body.light .question-answer strong{
+    color:#111;
+}
+
+.question-examples-title{
+    margin-top:30px;
+    margin-bottom:12px;
+    color:#999;
+}
+
+.question-examples{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.question-example{
+    padding:9px 12px;
+    border-radius:20px;
+    border:1px solid #292d38;
+    background:#15171d;
+    color:#fff;
+    cursor:pointer;
+    transition:.15s;
+}
+
+.question-example:hover{
+    background:#20232c;
+    transform:translateY(-1px);
+}
+
+body.light .question-example{
+    background:#fff;
+    color:#111;
+    border-color:#ddd;
+}
+
+
+@media(max-width:800px){
+
+    .hero{
+        padding:25px 20px;
+    }
+
+    .brand{
+        min-width:250px;
+    }
+
+    .decoration{
+        height:220px;
+    }
+
+    .anime-header,
+    .character-big{
+        flex-direction:column;
+    }
+
+    .anime-cover-big{
+        width:100%;
+        height:210px;
+    }
+
+    .character-big img{
+        width:100%;
+        height:360px;
+    }
+
+    .info{
+        grid-template-columns:1fr;
+    }
+
+    .question-box{
+        flex-direction:column;
+    }
+
+    .question-button{
+        min-height:45px;
+    }
+}
+
+@media(max-width:550px){
+
+    .logo{
+        font-size:18px;
+    }
+
+    .home-btn{
+        display:none;
+    }
+
+    .questions-btn{
+        font-size:13px;
+    }
+
+    .hero{
+        padding:22px 12px;
+    }
+
+    .brand{
+        min-width:45%;
+        width:45%;
+    }
+
+    .brand h1{
+        font-size:40px;
+    }
+
+    .brand p{
+        font-size:11px;
+    }
+
+    .decoration{
+        height:190px;
+    }
+
+    .decoration img{
+        opacity:.3;
+    }
+
+    .deco1,
+    .deco2,
+    .deco3,
+    .deco4,
+    .deco5{
+        width:110px;
+        height:150px;
+    }
+
+    .container{
+        padding-left:15px;
+        padding-right:15px;
+    }
+
+    .anime-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
+    }
+
+    .anime-cover{
+        height:105px;
+    }
+
+    .anime-info{
+        padding:9px;
+    }
+
+    .anime-name{
+        font-size:14px;
+    }
+
+    .character-text h1{
+        font-size:30px;
+    }
+
+    .character-big img{
+        height:380px;
+    }
+
+    .questions-title{
+        font-size:30px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="left-menu">
+
+        <button class="menu-btn" onclick="toggleSettings()">⚙️</button>
+
+        <button class="home-btn" onclick="showHome()" id="homeBtn">
+            🏠 Início
+        </button>
+
+        <!-- =========================
+             PERGUNTAS — ADICIONADO
+        ========================== -->
+
+        <button class="questions-btn"
+                onclick="showQuestions()"
+                id="questionsBtn">
+            ❓ Perguntas
+        </button>
+
+    </div>
+
+    <div class="logo">
+        ANIMEWIKI
+    </div>
+
+    <div class="search-area" id="searchArea">
+
+        <input
+            id="searchInput"
+            class="search-input"
+            placeholder="Pesquisar anime..."
+            oninput="searchAnime()"
+        >
+
+        <button
+            class="search-btn"
+            onclick="toggleSearch()"
+        >
+            🔎
+        </button>
+
+    </div>
+
+</header>
+
+<div class="settings" id="settings">
+
+    <h3 id="settingsTitle">⚙️ Configurações</h3>
+
+    <button onclick="toggleTheme()" id="themeButton">
+        🌙 Alternar tema
+    </button>
+
+    <button onclick="language('pt')">
+        🇧🇷 Português
+    </button>
+
+    <button onclick="language('en')">
+        🇺🇸 English
+    </button>
+
+    <button onclick="language('es')">
+        🇪🇸 Español
+    </button>
+
+</div>
+
+<main id="homePage" class="page active">
+
+    <section class="hero">
+
+        <div class="brand">
+
+            <h1>
+                ANIME<br>
+                WIKI
+            </h1>
+
+            <p id="heroDescription">
+                Explore animes, personagens,
+                temporadas e episódios.
+            </p>
+
+        </div>
+
+        <div class="decoration">
+
+            <img id="deco1" class="deco1" alt="">
+            <img id="deco2" class="deco2" alt="">
+            <img id="deco3" class="deco3" alt="">
+            <img id="deco4" class="deco4" alt="">
+            <img id="deco5" class="deco5" alt="">
+
+        </div>
+
+    </section>
+
+    <section class="container">
+
+        <h2 class="section-title" id="animeSectionTitle">
+            🔥 Animes
+        </h2>
+
+        <div class="anime-grid" id="animeGrid"></div>
+
+    </section>
+
+</main>
+
+<main id="animePage" class="page">
+
+    <section class="container">
+
+        <button class="back" onclick="showHome()" id="backAnimeButton">
+            ← Voltar
+        </button>
+
+        <div class="anime-header">
+
+            <img id="animeCoverBig" class="anime-cover-big" alt="">
+
+            <div class="anime-description">
+
+                <h1 id="animeTitle"></h1>
+
+                <p id="animeDescription"></p>
+
+                <div class="tags">
+
+                    <span class="tag" id="animeYear"></span>
+                    <span class="tag" id="animeEpisodes"></span>
+                    <span class="tag" id="animeRating"></span>
+                    <span class="tag" id="animeGenres"></span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <h2 class="section-title" id="seasonTitle">
+            🎬 Temporadas
+        </h2>
+
+        <div class="seasons" id="seasonButtons"></div>
+
+        <div class="episodes" id="episodeList"></div>
+
+        <h2 class="section-title" id="characterTitle">
+            👤 Personagens
+        </h2>
+
+        <div class="characters" id="characterList"></div>
+
+    </section>
+
+</main>
+
+
+<!-- =====================================================
+     ÁREA DE PERGUNTAS — ADICIONADA
+===================================================== -->
+
+<main id="questionsPage" class="page">
+
+    <section class="container">
+
+        <div class="questions-container">
+
+            <h1 class="questions-title"
+                id="questionsTitle">
+                ❓ Área de Perguntas
+            </h1>
+
+            <p class="questions-subtitle"
+               id="questionsSubtitle">
+                Pergunte sobre animes, personagens e informações do ANIMEWIKI.
+            </p>
+
+            <div class="question-box">
+
+                <input
+                    id="questionInput"
+                    class="question-input"
+                    type="text"
+                    placeholder="Ex.: Qual a idade do Yuji?"
+                    onkeydown="questionEnter(event)"
+                >
+
+                <button
+                    class="question-button"
+                    onclick="answerQuestion()"
+                    id="questionButton">
+                    Perguntar
+                </button>
+
+            </div>
+
+            <div class="question-answer"
+                 id="questionAnswer">
+
+                🤖 Faça uma pergunta sobre anime.
+
+            </div>
+
+            <div class="question-examples-title"
+                 id="questionExamplesTitle">
+
+                Exemplos:
+
+            </div>
+
+            <div class="question-examples">
+
+                <button
+                    class="question-example"
+                    onclick="useQuestion('Qual a idade do Yuji?')">
+                    Qual a idade do Yuji?
+                </button>
+
+                <button
+                    class="question-example"
+                    onclick="useQuestion('Quem é o protagonista de Naruto?')">
+                    Protagonista de Naruto?
+                </button>
+
+                <button
+                    class="question-example"
+                    onclick="useQuestion('Qual a idade do Luffy?')">
+                    Idade do Luffy?
+                </button>
+
+                <button
+                    class="question-example"
+                    onclick="useQuestion('Quem é a irmã do Tanjiro?')">
+                    Irmã do Tanjiro?
+                </button>
+
+                <button
+                    class="question-example"
+                    onclick="useQuestion('Qual é o anime do Gojo?')">
+                    Anime do Gojo?
+                </button>
+
+                <button
+                    class="question-example"
+                    onclick="useQuestion('Qual o poder do Deku?')">
+                    Poder do Deku?
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<main id="characterPage" class="character-page">
+
+    <section class="container">
+
+        <button class="back" onclick="backToAnime()" id="backCharacterButton">
+            ← Voltar
+        </button>
+
+        <div class="character-big">
+
+            <img id="characterBigImage" alt="">
+
+            <div class="character-text">
+
+                <h1 id="characterBigName"></h1>
+
+                <p id="characterBigDescription"></p>
+
+                <div class="info">
+
+                    <div class="info-item">
+                        <b id="labelAnime">🎬 Anime principal</b>
+                        <span id="characterAnime"></span>
+                    </div>
+
+                    <div class="info-item">
+                        <b id="labelJapanese">🇯🇵 Nome japonês</b>
+                        <span id="characterJapanese"></span>
+                    </div>
+
+                    <div class="info-item">
+                        <b id="labelBirthday">🎂 Data de nascimento</b>
+                        <span id="characterBirthday"></span>
+                    </div>
+
+                    <div class="info-item">
+                        <b id="labelAge">🔢 Idade</b>
+                        <span id="characterAge"></span>
+                    </div>
+
+                    <div class="info-item">
+                        <b id="labelGender">⚧️ Gênero</b>
+                        <span id="characterGender"></span>
+                    </div>
+
+                    <div class="info-item">
+                        <b id="labelBlood">🩸 Tipo sanguíneo</b>
+                        <span id="characterBlood"></span>
+                    </div>
+
+                    <div class="info-item">
+                        <b id="labelVoice">🎙️ Dublador japonês</b>
+                        <span id="characterVoice"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="character-about">
+
+            <h2 id="aboutTitle">
+                📖 Sobre o personagem
+            </h2>
+
+            <p id="characterFullDescription">
+                Carregando informações...
+            </p>
+
+        </div>
+
+        <div class="character-about">
+
+            <h2 id="otherTitle">
+                🎬 Outras aparições
+            </h2>
+
+            <div id="characterOtherAnime" class="character-anime-list"></div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script>
+
+/* =========================================================
+   IDIOMA
+========================================================= */
+
+let currentLanguage = "pt";
+
+const translations = {
+
+    pt:{
+        home:"🏠 Início",
+        questions:"❓ Perguntas",
+        search:"Pesquisar anime...",
+        settings:"⚙️ Configurações",
+        theme:"🌙 Alternar tema",
+        hero:"Explore animes, personagens, temporadas e episódios.",
+        anime:"🔥 Animes",
+        back:"← Voltar",
+        seasons:"🎬 Temporadas",
+        characters:"👤 Personagens",
+        mainAnime:"🎬 Anime principal",
+        japanese:"🇯🇵 Nome japonês",
+        birthday:"🎂 Data de nascimento",
+        age:"🔢 Idade",
+        gender:"⚧️ Gênero",
+        blood:"🩸 Tipo sanguíneo",
+        voice:"🎙️ Dublador japonês",
+        about:"📖 Sobre o personagem",
+        other:"🎬 Outras aparições",
+        loading:"🔄 Carregando personagens...",
+        notFound:"Nenhum personagem encontrado.",
+        error:"Não foi possível carregar os personagens.",
+        internet:"Não foi possível carregar os personagens. Verifique sua internet.",
+        noInfo:"Não informado",
+        noOther:"Nenhuma outra aparição encontrada",
+        selected:" selecionado!",
+        episode:"Episódio",
+        episodes:"episódios",
+        season:"TEMP.",
+        questionsTitle:"❓ Área de Perguntas",
+        questionsSubtitle:"Pergunte sobre animes, personagens e informações do ANIMEWIKI.",
+        questionPlaceholder:"Ex.: Qual a idade do Yuji?",
+        ask:"Perguntar",
+        questionInitial:"🤖 Faça uma pergunta sobre anime.",
+        questionExamples:"Exemplos:",
+        unknownQuestion:"🤔 Ainda não sei responder essa pergunta. Tente perguntar sobre idade, protagonista, anime, episódios, ano, nota, gênero ou poder."
+    },
+
+    en:{
+        home:"🏠 Home",
+        questions:"❓ Questions",
+        search:"Search anime...",
+        settings:"⚙️ Settings",
+        theme:"🌙 Change theme",
+        hero:"Explore anime, characters, seasons and episodes.",
+        anime:"🔥 Anime",
+        back:"← Back",
+        seasons:"🎬 Seasons",
+        characters:"👤 Characters",
+        mainAnime:"🎬 Main anime",
+        japanese:"🇯🇵 Japanese name",
+        birthday:"🎂 Date of birth",
+        age:"🔢 Age",
+        gender:"⚧️ Gender",
+        blood:"🩸 Blood type",
+        voice:"🎙️ Japanese voice actor",
+        about:"📖 About the character",
+        other:"🎬 Other appearances",
+        loading:"🔄 Loading characters...",
+        notFound:"No characters found.",
+        error:"Could not load the characters.",
+        internet:"Could not load the characters. Check your internet connection.",
+        noInfo:"Not informed",
+        noOther:"No other appearances found",
+        selected:" selected!",
+        episode:"Episode",
+        episodes:"episodes",
+        season:"SEASON",
+        questionsTitle:"❓ Question Area",
+        questionsSubtitle:"Ask about anime, characters and ANIMEWIKI information.",
+        questionPlaceholder:"Example: How old is Yuji?",
+        ask:"Ask",
+        questionInitial:"🤖 Ask a question about anime.",
+        questionExamples:"Examples:",
+        unknownQuestion:"🤔 I don't know how to answer that yet. Try asking about age, protagonist, anime, episodes, year, rating, genre or power."
+    },
+
+    es:{
+        home:"🏠 Inicio",
+        questions:"❓ Preguntas",
+        search:"Buscar anime...",
+        settings:"⚙️ Configuración",
+        theme:"🌙 Cambiar tema",
+        hero:"Explora animes, personajes, temporadas y episodios.",
+        anime:"🔥 Animes",
+        back:"← Volver",
+        seasons:"🎬 Temporadas",
+        characters:"👤 Personajes",
+        mainAnime:"🎬 Anime principal",
+        japanese:"🇯🇵 Nombre japonés",
+        birthday:"🎂 Fecha de nacimiento",
+        age:"🔢 Edad",
+        gender:"⚧️ Género",
+        blood:"🩸 Tipo de sangre",
+        voice:"🎙️ Actor de voz japonés",
+        about:"📖 Sobre el personaje",
+        other:"🎬 Otras apariciones",
+        loading:"🔄 Cargando personajes...",
+        notFound:"No se encontraron personajes.",
+        error:"No se pudieron cargar los personajes.",
+        internet:"No se pudieron cargar los personajes. Verifica tu internet.",
+        noInfo:"No informado",
+        noOther:"No se encontraron otras apariciones",
+        selected:" seleccionado!",
+        episode:"Episodio",
+        episodes:"episodios",
+        season:"TEMP.",
+        questionsTitle:"❓ Área de Preguntas",
+        questionsSubtitle:"Pregunta sobre animes, personajes e información de ANIMEWIKI.",
+        questionPlaceholder:"Ej.: ¿Cuántos años tiene Yuji?",
+        ask:"Preguntar",
+        questionInitial:"🤖 Haz una pregunta sobre anime.",
+        questionExamples:"Ejemplos:",
+        unknownQuestion:"🤔 Todavía no sé responder esa pregunta. Intenta preguntar sobre edad, protagonista, anime, episodios, año, nota, género o poder."
+    }
+
+};
+
+function t(key){
+    return translations[currentLanguage][key];
+}
+
+
+/* =========================================================
+   ANIMES
+========================================================= */
+
+const animes = [
+
+{
+title:"Demon Slayer",
+search:"Kimetsu no Yaiba",
+year:2019,
+episodes:26,
+rating:"8.6",
+genres:"Ação • Fantasia",
+seasons:[26,7,11,11,8]
+},
+
+{
+title:"Naruto",
+search:"Naruto",
+year:2002,
+episodes:220,
+rating:"8.0",
+genres:"Ação • Aventura",
+seasons:[220]
+},
+
+{
+title:"One Piece",
+search:"One Piece",
+year:1999,
+episodes:1000,
+rating:"8.7",
+genres:"Ação • Aventura",
+seasons:[1000]
+},
+
+{
+title:"Jujutsu Kaisen",
+search:"Jujutsu Kaisen",
+year:2020,
+episodes:47,
+rating:"8.5",
+genres:"Ação • Sobrenatural",
+seasons:[24,23]
+},
+
+{
+title:"Attack on Titan",
+search:"Shingeki no Kyojin",
+year:2013,
+episodes:89,
+rating:"9.0",
+genres:"Ação • Drama",
+seasons:[25,12,22,30]
+},
+
+{
+title:"Dragon Ball",
+search:"Dragon Ball",
+year:1986,
+episodes:153,
+rating:"8.4",
+genres:"Ação • Aventura",
+seasons:[153]
+},
+
+{
+title:"Bleach",
+search:"Bleach",
+year:2004,
+episodes:366,
+rating:"8.2",
+genres:"Ação • Fantasia",
+seasons:[366]
+},
+
+{
+title:"My Hero Academia",
+search:"Boku no Hero Academia",
+year:2016,
+episodes:170,
+rating:"8.0",
+genres:"Ação • Super-herói",
+seasons:[13,25,25,25,25,25,25,32]
+},
+
+{
+title:"Hunter x Hunter",
+search:"Hunter x Hunter",
+year:2011,
+episodes:148,
+rating:"9.0",
+genres:"Ação • Aventura",
+seasons:[148]
+},
+
+{
+title:"Solo Leveling",
+search:"Ore dake Level Up na Ken",
+year:2024,
+episodes:25,
+rating:"8.8",
+genres:"Ação • Fantasia",
+seasons:[12,13]
+},
+
+{
+title:"Chainsaw Man",
+search:"Chainsaw Man",
+year:2022,
+episodes:12,
+rating:"8.5",
+genres:"Ação • Horror",
+seasons:[12]
+},
+
+{
+title:"Black Clover",
+search:"Black Clover",
+year:2017,
+episodes:170,
+rating:"8.1",
+genres:"Ação • Fantasia",
+seasons:[170]
+},
+
+{
+title:"Fairy Tail",
+search:"Fairy Tail",
+year:2009,
+episodes:328,
+rating:"7.9",
+genres:"Ação • Fantasia",
+seasons:[328]
+},
+
+{
+title:"Steins;Gate",
+search:"Steins;Gate",
+year:2011,
+episodes:24,
+rating:"9.0",
+genres:"Ficção científica • Suspense",
+seasons:[24]
+},
+
+{
+title:"Blue Exorcist",
+search:"Ao no Exorcist",
+year:2011,
+episodes:49,
+rating:"7.8",
+genres:"Ação • Fantasia",
+seasons:[49]
+},
+
+{
+title:"Sword Art Online",
+search:"Sword Art Online",
+year:2012,
+episodes:96,
+rating:"7.5",
+genres:"Ação • Fantasia",
+seasons:[25,24,24,23]
+},
+
+{
+title:"One Punch Man",
+search:"One Punch Man",
+year:2015,
+episodes:24,
+rating:"8.5",
+genres:"Ação • Comédia",
+seasons:[12,12]
+},
+
+{
+title:"Dr. Stone",
+search:"Dr. Stone",
+year:2019,
+episodes:81,
+rating:"8.1",
+genres:"Aventura • Ficção científica",
+seasons:[24,11,22,24]
+},
+
+{
+title:"Re:Zero",
+search:"Re:Zero kara Hajimeru Isekai Seikatsu",
+year:2016,
+episodes:66,
+rating:"8.2",
+genres:"Fantasia • Drama",
+seasons:[25,25,16]
+},
+
+{
+title:"Frieren: Beyond Journey's End",
+search:"Sousou no Frieren",
+year:2023,
+episodes:28,
+rating:"9.2",
+genres:"Fantasia • Aventura",
+seasons:[28]
+},
+
+{
+title:"Haikyuu!!",
+search:"Haikyuu!!",
+year:2014,
+episodes:85,
+rating:"8.7",
+genres:"Esporte • Comédia",
+seasons:[25,25,10,13,12]
+}
+
+];
+
+
+/* =========================================================
+   NOMES DOS PERSONAGENS
+========================================================= */
+
+const characterNameFixes = {
+
+"Jin-U Seong":"Sung Jin-Woo",
+"Seong Jin-U":"Sung Jin-Woo",
+"Seong Jinwoo":"Sung Jin-Woo",
+"Jinwoo Sung":"Sung Jin-Woo",
+"Sung Jinwoo":"Sung Jin-Woo",
+
+"Cha Hae In":"Cha Hae-In",
+"Yoo Jinho":"Yoo Jin-Ho",
+
+"Chousou":"Choso",
+"Itadori Yuuji":"Yuji Itadori",
+"Yuuji Itadori":"Yuji Itadori",
+"Satoru Gojou":"Satoru Gojo",
+"Gojo Satoru":"Satoru Gojo",
+"Suguru Getou":"Suguru Geto",
+"Toji Zenin":"Toji Fushiguro",
+"Okkotsu Yuuta":"Yuta Okkotsu",
+"Sukuna":"Ryomen Sukuna",
+
+"Kamado Tanjirou":"Tanjiro Kamado",
+"Kamado Tanjirō":"Tanjiro Kamado",
+"Tanjirou Kamado":"Tanjiro Kamado",
+"Kamado Nezuko":"Nezuko Kamado",
+"Agatsuma Zenitsu":"Zenitsu Agatsuma",
+"Hashibira Inosuke":"Inosuke Hashibira",
+"Tomioka Giyuu":"Giyu Tomioka",
+"Tomioka Giyū":"Giyu Tomioka",
+"Giyuu Tomioka":"Giyu Tomioka",
+"Kocho Shinobu":"Shinobu Kocho",
+"Kochou Shinobu":"Shinobu Kocho",
+"Rengoku Kyoujurou":"Kyojuro Rengoku",
+"Rengoku Kyojurou":"Kyojuro Rengoku",
+"Uzui Tengen":"Tengen Uzui",
+"Tokitou Muichirou":"Muichiro Tokito",
+"Tokito Muichirou":"Muichiro Tokito",
+"Kanroji Mitsuri":"Mitsuri Kanroji",
+"Shinazugawa Sanemi":"Sanemi Shinazugawa",
+"Shinazugawa Genya":"Genya Shinazugawa",
+"Iguro Obanai":"Obanai Iguro",
+"Himejima Gyomei":"Gyomei Himejima",
+"Tsuyuri Kanao":"Kanao Tsuyuri",
+"Kibutsuji Muzan":"Muzan Kibutsuji",
+"Douma":"Doma",
+"Kokushibou":"Kokushibo",
+
+"Uzumaki Naruto":"Naruto Uzumaki",
+"Uchiha Sasuke":"Sasuke Uchiha",
+"Haruno Sakura":"Sakura Haruno",
+"Hatake Kakashi":"Kakashi Hatake",
+"Uchiha Itachi":"Itachi Uchiha",
+"Uchiha Madara":"Madara Uchiha",
+"Uchiha Obito":"Obito Uchiha",
+"Hyuga Hinata":"Hinata Hyuga",
+"Nara Shikamaru":"Shikamaru Nara",
+
+"Vinsmoke Sanji":"Sanji",
+"Trafalgar D. Water Law":"Trafalgar Law",
+"Edward Newgate":"Whitebeard",
+
+"Kurosaki Ichigo":"Ichigo Kurosaki",
+"Kuchiki Rukia":"Rukia Kuchiki",
+"Kuchiki Byakuya":"Byakuya Kuchiki",
+"Abarai Renji":"Renji Abarai",
+"Hitsugaya Toushirou":"Toshiro Hitsugaya",
+"Hitsugaya Toshiro":"Toshiro Hitsugaya",
+"Zaraki Kenpachi":"Kenpachi Zaraki",
+"Urahara Kisuke":"Kisuke Urahara",
+"Aizen Sousuke":"Sosuke Aizen",
+
+"Eren Jaeger":"Eren Yeager",
+"Levi":"Levi Ackerman",
+"Hange Zoe":"Hange Zoë",
+
+"Son Gokuu":"Son Goku",
+"Son Gohan":"Gohan",
+"Freeza":"Frieza",
+
+"Midoriya Izuku":"Izuku Midoriya",
+"Bakugou Katsuki":"Katsuki Bakugo",
+"Bakugo Katsuki":"Katsuki Bakugo",
+"Todoroki Shouto":"Shoto Todoroki",
+"Todoroki Shoto":"Shoto Todoroki",
+"Uraraka Ochako":"Ochaco Uraraka",
+"Aizawa Shouta":"Shota Aizawa",
+"Aizawa Shota":"Shota Aizawa",
+
+"Freecss Gon":"Gon Freecss",
+"Hisoka":"Hisoka",
+
+"Hayakawa Aki":"Aki Hayakawa",
+
+"Okabe Rintarou":"Rintaro Okabe",
+"Okabe Rintaro":"Rintaro Okabe",
+"Makise Kurisu":"Kurisu Makise",
+"Shiina Mayuri":"Mayuri Shiina",
+
+"Kirigaya Kazuto":"Kirito",
+"Yuuki Asuna":"Asuna",
+"Asuna Yuuki":"Asuna",
+"Konno Yuuki":"Yuuki Konno",
+
+"Ishigami Senkuu":"Senku Ishigami",
+"Ishigami Senku":"Senku Ishigami",
+"Asagiri Gen":"Gen Asagiri",
+
+"Natsuki Subaru":"Subaru Natsuki",
+
+"Hinata Shouyou":"Shoyo Hinata",
+"Hinata Shoyo":"Shoyo Hinata",
+"Kageyama Tobio":"Tobio Kageyama",
+"Oikawa Tooru":"Toru Oikawa",
+"Bokuto Koutarou":"Kotaro Bokuto",
+"Bokuto Koutaro":"Kotaro Bokuto",
+"Nishinoya Yuu":"Yu Nishinoya"
+
+};
+
+function fixCharacterName(name){
+
+    if(!name){
+        return currentLanguage==="en"
+            ? "Unknown name"
+            : currentLanguage==="es"
+            ? "Nombre desconocido"
+            : "Nome desconhecido";
+    }
+
+    const clean=name.trim();
+
+    return characterNameFixes[clean] || clean;
+}
+
+
+/* =========================================================
+   DESCRIÇÕES DOS PERSONAGENS
+========================================================= */
+
+const characterDescriptions = {
+
+"Sung Jin-Woo":{
+pt:"Sung Jin-Woo é um caçador que começa como o mais fraco de todos, mas recebe uma habilidade especial que permite que ele evolua continuamente e se torne cada vez mais poderoso.",
+en:"Sung Jin-Woo is a hunter who starts as the weakest of them all, but gains a special ability that allows him to continuously level up and become increasingly powerful.",
+es:"Sung Jin-Woo es un cazador que comienza siendo el más débil de todos, pero obtiene una habilidad especial que le permite subir de nivel continuamente y volverse cada vez más poderoso."
+},
+
+"Yuji Itadori":{
+pt:"Yuji Itadori é um estudante que entra no mundo dos feiticeiros após consumir um dos dedos de Ryomen Sukuna.",
+en:"Yuji Itadori is a student who enters the world of sorcery after consuming one of Ryomen Sukuna's fingers.",
+es:"Yuji Itadori es un estudiante que entra en el mundo de la hechicería después de consumir uno de los dedos de Ryomen Sukuna."
+},
+
+"Satoru Gojo":{
+pt:"Satoru Gojo é um dos feiticeiros mais poderosos de Jujutsu Kaisen e professor da Escola Técnica de Jujutsu de Tóquio.",
+en:"Satoru Gojo is one of the most powerful sorcerers in Jujutsu Kaisen and a teacher at Tokyo Jujutsu High.",
+es:"Satoru Gojo es uno de los hechiceros más poderosos de Jujutsu Kaisen y profesor de la Escuela Técnica de Hechicería de Tokio."
+},
+
+"Ryomen Sukuna":{
+pt:"Ryomen Sukuna é conhecido como o Rei das Maldições e possui um enorme poder amaldiçoado.",
+en:"Ryomen Sukuna is known as the King of Curses and possesses immense cursed power.",
+es:"Ryomen Sukuna es conocido como el Rey de las Maldiciones y posee un enorme poder maldito."
+},
+
+"Tanjiro Kamado":{
+pt:"Tanjiro Kamado se torna um caçador de demônios depois que sua família é atacada. Ele busca uma maneira de transformar sua irmã Nezuko novamente em humana.",
+en:"Tanjiro Kamado becomes a demon slayer after his family is attacked. He searches for a way to turn his sister Nezuko back into a human.",
+es:"Tanjiro Kamado se convierte en cazador de demonios después de que su familia es atacada. Busca una forma de convertir a su hermana Nezuko nuevamente en humana."
+},
+
+"Nezuko Kamado":{
+pt:"Nezuko Kamado é a irmã de Tanjiro que foi transformada em demônio. Mesmo assim, ela mantém sentimentos humanos e tenta proteger seu irmão.",
+en:"Nezuko Kamado is Tanjiro's sister who was turned into a demon. Even so, she retains human emotions and tries to protect her brother.",
+es:"Nezuko Kamado es la hermana de Tanjiro que fue convertida en demonio. Aun así, conserva emociones humanas e intenta proteger a su hermano."
+},
+
+"Zenitsu Agatsuma":{
+pt:"Zenitsu Agatsuma é um caçador de demônios extremamente medroso, mas possui uma grande habilidade com sua técnica de Respiração do Trovão.",
+en:"Zenitsu Agatsuma is an extremely fearful demon slayer, but he possesses great skill with his Thunder Breathing technique.",
+es:"Zenitsu Agatsuma es un cazador de demonios extremadamente miedoso, pero posee una gran habilidad con su técnica de Respiración del Trueno."
+},
+
+"Inosuke Hashibira":{
+pt:"Inosuke Hashibira é um caçador de demônios criado nas montanhas. Ele é conhecido por sua personalidade agressiva e por usar duas espadas.",
+en:"Inosuke Hashibira is a demon slayer who was raised in the mountains. He is known for his aggressive personality and for using two swords.",
+es:"Inosuke Hashibira es un cazador de demonios criado en las montañas. Es conocido por su personalidad agresiva y por usar dos espadas."
+},
+
+"Naruto Uzumaki":{
+pt:"Naruto Uzumaki é um ninja da Vila da Folha que sonha em se tornar Hokage e ser reconhecido por todos.",
+en:"Naruto Uzumaki is a ninja from the Hidden Leaf Village who dreams of becoming Hokage and being recognized by everyone.",
+es:"Naruto Uzumaki es un ninja de la Aldea Oculta de la Hoja que sueña con convertirse en Hokage y ser reconocido por todos."
+},
+
+"Sasuke Uchiha":{
+pt:"Sasuke Uchiha é um dos últimos membros do clã Uchiha e busca ficar mais forte para alcançar seus objetivos.",
+en:"Sasuke Uchiha is one of the last members of the Uchiha clan and seeks to become stronger to achieve his goals.",
+es:"Sasuke Uchiha es uno de los últimos miembros del clan Uchiha y busca hacerse más fuerte para alcanzar sus objetivos."
+},
+
+"Kakashi Hatake":{
+pt:"Kakashi Hatake é um ninja experiente da Vila da Folha e foi o líder do Time 7.",
+en:"Kakashi Hatake is an experienced ninja from the Hidden Leaf Village and was the leader of Team 7.",
+es:"Kakashi Hatake es un ninja experimentado de la Aldea Oculta de la Hoja y fue el líder del Equipo 7."
+},
+
+"Monkey D. Luffy":{
+pt:"Monkey D. Luffy é o capitão dos Piratas do Chapéu de Palha e sonha em encontrar o One Piece e se tornar o Rei dos Piratas.",
+en:"Monkey D. Luffy is the captain of the Straw Hat Pirates and dreams of finding the One Piece and becoming the Pirate King.",
+es:"Monkey D. Luffy es el capitán de los Piratas del Sombrero de Paja y sueña con encontrar el One Piece y convertirse en el Rey de los Piratas."
+},
+
+"Ichigo Kurosaki":{
+pt:"Ichigo Kurosaki é um jovem que recebe poderes de Shinigami e passa a proteger o mundo dos espíritos e das ameaças sobrenaturais.",
+en:"Ichigo Kurosaki is a young man who gains Shinigami powers and begins protecting the world from spirits and supernatural threats.",
+es:"Ichigo Kurosaki es un joven que obtiene poderes de Shinigami y comienza a proteger el mundo de los espíritus y las amenazas sobrenaturales."
+},
+
+"Eren Yeager":{
+pt:"Eren Yeager deseja eliminar a ameaça dos Titãs e descobrir a verdade sobre o mundo além das muralhas.",
+en:"Eren Yeager wants to eliminate the threat of the Titans and discover the truth about the world beyond the walls.",
+es:"Eren Yeager quiere eliminar la amenaza de los Titanes y descubrir la verdad sobre el mundo más allá de las murallas."
+},
+
+"Levi Ackerman":{
+pt:"Levi Ackerman é um dos soldados mais habilidosos da humanidade e membro importante do Corpo de Exploração.",
+en:"Levi Ackerman is one of humanity's most skilled soldiers and an important member of the Survey Corps.",
+es:"Levi Ackerman es uno de los soldados más habilidosos de la humanidad y un miembro importante del Cuerpo de Exploración."
+},
+
+"Son Goku":{
+pt:"Son Goku é um guerreiro Saiyajin que busca ficar cada vez mais forte enquanto protege a Terra e seus amigos.",
+en:"Son Goku is a Saiyan warrior who seeks to become stronger while protecting Earth and his friends.",
+es:"Son Goku es un guerrero Saiyajin que busca hacerse cada vez más fuerte mientras protege la Tierra y a sus amigos."
+},
+
+"Izuku Midoriya":{
+pt:"Izuku Midoriya sonha em se tornar um grande herói mesmo tendo nascido sem uma individualidade.",
+en:"Izuku Midoriya dreams of becoming a great hero despite being born without a Quirk.",
+es:"Izuku Midoriya sueña con convertirse en un gran héroe a pesar de haber nacido sin un Don."
+},
+
+"Gon Freecss":{
+pt:"Gon Freecss parte em uma jornada para se tornar um Hunter e descobrir mais sobre seu pai.",
+en:"Gon Freecss begins a journey to become a Hunter and learn more about his father.",
+es:"Gon Freecss comienza un viaje para convertirse en Hunter y descubrir más sobre su padre."
+},
+
+"Aki Hayakawa":{
+pt:"Aki Hayakawa é um Caçador de Demônios que dedica sua vida a eliminar demônios e buscar vingança.",
+en:"Aki Hayakawa is a Devil Hunter who dedicates his life to eliminating devils and seeking revenge.",
+es:"Aki Hayakawa es un Cazador de Demonios que dedica su vida a eliminar demonios y buscar venganza."
+},
+
+"Rintaro Okabe":{
+pt:"Rintaro Okabe é um estudante excêntrico que se autodenomina cientista louco e acaba envolvido em acontecimentos relacionados a viagens no tempo.",
+en:"Rintaro Okabe is an eccentric student who calls himself a mad scientist and becomes involved in events related to time travel.",
+es:"Rintaro Okabe es un estudiante excéntrico que se llama a sí mismo científico loco y termina involucrado en acontecimientos relacionados con los viajes en el tiempo."
+},
+
+"Kirito":{
+pt:"Kirito é um jogador habilidoso que fica preso em um mundo virtual e luta para sobreviver e encontrar uma saída.",
+en:"Kirito is a skilled player who becomes trapped in a virtual world and fights to survive and find a way out.",
+es:"Kirito es un jugador habilidoso que queda atrapado en un mundo virtual y lucha por sobrevivir y encontrar una salida."
+},
+
+"Senku Ishigami":{
+pt:"Senku Ishigami é um jovem extremamente inteligente que usa a ciência para tentar reconstruir a civilização após a humanidade ser petrificada.",
+en:"Senku Ishigami is an extremely intelligent young man who uses science to rebuild civilization after humanity is petrified.",
+es:"Senku Ishigami es un joven extremadamente inteligente que utiliza la ciencia para reconstruir la civilización después de que la humanidad queda petrificada."
+},
+
+"Subaru Natsuki":{
+pt:"Subaru Natsuki é transportado para outro mundo e descobre que possui a habilidade de retornar após morrer.",
+en:"Subaru Natsuki is transported to another world and discovers that he can return after dying.",
+es:"Subaru Natsuki es transportado a otro mundo y descubre que puede regresar después de morir."
+},
+
+"Shoyo Hinata":{
+pt:"Shoyo Hinata é um jogador de vôlei determinado a superar sua baixa estatura e se tornar um grande atleta.",
+en:"Shoyo Hinata is a determined volleyball player who wants to overcome his short stature and become a great athlete.",
+es:"Shoyo Hinata es un jugador de voleibol decidido a superar su baja estatura y convertirse en un gran atleta."
+}
+
+};
+
+
+/* =========================================================
+   TRADUÇÃO AUTOMÁTICA DAS DESCRIÇÕES
+========================================================= */
+
+const translationCache={};
+
+async function translateCharacterDescription(text){
+
+    if(!text){
+        return t("noInfo");
+    }
+
+    if(currentLanguage==="en"){
+        return text;
+    }
+
+    const cacheKey=
+        currentLanguage+"|"+text;
+
+    if(translationCache[cacheKey]){
+        return translationCache[cacheKey];
+    }
+
+    const target=
+        currentLanguage==="pt"
+        ? "pt"
+        : "es";
+
+    try{
+
+        const url=
+            "https://translate.googleapis.com/translate_a/single"+
+            "?client=gtx"+
+            "&sl=en"+
+            "&tl="+target+
+            "&dt=t"+
+            "&q="+encodeURIComponent(text);
+
+        const response=
+            await fetch(url);
+
+        const data=
+            await response.json();
+
+        if(
+            data &&
+            data[0] &&
+            Array.isArray(data[0])
+        ){
+
+            let translated="";
+
+            data[0].forEach(part=>{
+
+                if(part && part[0]){
+                    translated+=part[0];
+                }
+
+            });
+
+            if(translated){
+
+                translationCache[cacheKey]=
+                    translated;
+
+                return translated;
+
+            }
+
+        }
+
+    }catch(error){
+
+        console.log(
+            "Erro na tradução:",
+            error
+        );
+
+    }
+
+    return text;
+
+}
+
+
+async function getCharacterDescription(
+    name,
+    apiDescription
+){
+
+    const fixed=
+        fixCharacterName(name);
+
+    if(
+        characterDescriptions[fixed] &&
+        characterDescriptions[fixed][currentLanguage]
+    ){
+
+        return characterDescriptions[fixed][currentLanguage];
+
+    }
+
+    const original=
+        cleanDescription(apiDescription);
+
+    if(!original){
+        return t("noInfo");
+    }
+
+    return await translateCharacterDescription(
+        original
+    );
+
+}
+
+
+/* =========================================================
+   CAPAS
+========================================================= */
+
+const coverMap={};
+
+async function loadCovers(){
+
+    const fields=animes.map((anime,index)=>{
+
+        return `
+            a${index}: Media(
+                search: "${anime.search.replace(/"/g,'\\"')}",
+                type: ANIME
+            ){
+                coverImage{
+                    extraLarge
+                    large
+                }
+            }
+        `;
+
+    }).join("");
+
+    const query=`
+        query{
+            ${fields}
+        }
+    `;
+
+    try{
+
+        const response=
+            await fetch(
+                "https://graphql.anilist.co",
+                {
+                    method:"POST",
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+                    body:JSON.stringify({
+                        query:query
+                    })
+                }
+            );
+
+        const data=
+            await response.json();
+
+        if(!data.data){
+            throw new Error(
+                "AniList não retornou os dados."
+            );
+        }
+
+        animes.forEach((anime,index)=>{
+
+            const result=
+                data.data["a"+index];
+
+            if(result && result.coverImage){
+
+                coverMap[anime.title]=
+                    result.coverImage.extraLarge ||
+                    result.coverImage.large;
+
+            }
+
+        });
+
+        renderHome();
+        updateDecoration();
+
+    }catch(error){
+
+        console.log(
+            "Erro nas capas:",
+            error
+        );
+
+        renderHome();
+
+    }
+
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+========================================================= */
+
+function placeholder(title){
+
+    return "data:image/svg+xml;charset=UTF-8,"+
+        encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="800"
+                 height="450">
+
+                <rect
+                    width="100%"
+                    height="100%"
+                    fill="#17191f"
+                />
+
+                <text
+                    x="50%"
+                    y="50%"
+                    fill="#ffffff"
+                    font-size="32"
+                    text-anchor="middle"
+                    dominant-baseline="middle">
+                    ${title}
+                </text>
+
+            </svg>
+        `);
+
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+function createCard(anime){
+
+    const card=
+        document.createElement("div");
+
+    card.className="anime-card";
+
+    card.onclick=()=>{
+        openAnime(anime);
+    };
+
+    const img=
+        document.createElement("img");
+
+    img.className="anime-cover";
+    img.alt=anime.title;
+
+    img.src=
+        coverMap[anime.title] ||
+        placeholder(anime.title);
+
+    img.onerror=()=>{
+        img.src=
+            placeholder(anime.title);
+    };
+
+    const info=
+        document.createElement("div");
+
+    info.className="anime-info";
+
+    info.innerHTML=`
+        <div class="anime-name">
+            ${anime.title}
+        </div>
+
+        <div class="anime-meta">
+            ${anime.year} • ${anime.episodes} ${t("episodes")}
+        </div>
+    `;
+
+    card.appendChild(img);
+    card.appendChild(info);
+
+    return card;
+}
+
+
+/* =========================================================
+   HOME
+========================================================= */
+
+function renderHome(){
+
+    const grid=
+        document.getElementById("animeGrid");
+
+    grid.innerHTML="";
+
+    animes.forEach(anime=>{
+        grid.appendChild(
+            createCard(anime)
+        );
+    });
+
+}
+
+
+/* =========================================================
+   DECORAÇÃO
+========================================================= */
+
+function updateDecoration(){
+
+    const selected=[
+        "Jujutsu Kaisen",
+        "Demon Slayer",
+        "Naruto",
+        "One Piece",
+        "Solo Leveling"
+    ];
+
+    selected.forEach((name,index)=>{
+
+        const img=
+            document.getElementById(
+                "deco"+(index+1)
+            );
+
+        if(img && coverMap[name]){
+            img.src=
+                coverMap[name];
+        }
+
+    });
+
+}
+
+
+/* =========================================================
+   ABRIR ANIME
+========================================================= */
+
+let currentAnime=null;
+
+function openAnime(anime){
+
+    currentAnime=anime;
+
+    document.getElementById("homePage")
+        .classList.remove("active");
+
+    document.getElementById("characterPage")
+        .classList.remove("active");
+
+    document.getElementById("questionsPage")
+        .classList.remove("active");
+
+    document.getElementById("animePage")
+        .classList.add("active");
+
+    document.getElementById("animeTitle")
+        .textContent=anime.title;
+
+    document.getElementById("animeCoverBig")
+        .src=
+            coverMap[anime.title] ||
+            placeholder(anime.title);
+
+    document.getElementById("animeDescription")
+        .textContent=
+            getDescription(anime.title);
+
+    document.getElementById("animeYear")
+        .textContent=
+            "📅 "+anime.year;
+
+    document.getElementById("animeEpisodes")
+        .textContent=
+            "🎬 "+
+            anime.episodes+
+            " "+
+            t("episodes");
+
+    document.getElementById("animeRating")
+        .textContent=
+            "⭐ "+anime.rating;
+
+    document.getElementById("animeGenres")
+        .textContent=
+            getGenres(anime.genres);
+
+    createSeasons(anime);
+
+    createCharacters(anime);
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* =========================================================
+   DESCRIÇÕES DOS ANIMES
+========================================================= */
+
+const descriptions={
+
+"Demon Slayer":{
+pt:"Tanjiro Kamado luta contra demônios enquanto procura uma maneira de salvar sua irmã Nezuko.",
+en:"Tanjiro Kamado fights demons while searching for a way to save his sister Nezuko.",
+es:"Tanjiro Kamado lucha contra demonios mientras busca una manera de salvar a su hermana Nezuko."
+},
+
+"Naruto":{
+pt:"Naruto Uzumaki sonha em se tornar Hokage e provar seu valor como ninja.",
+en:"Naruto Uzumaki dreams of becoming Hokage and proving his worth as a ninja.",
+es:"Naruto Uzumaki sueña con convertirse en Hokage y demostrar su valor como ninja."
+},
+
+"One Piece":{
+pt:"Monkey D. Luffy e sua tripulação navegam pelo mundo em busca do lendário One Piece.",
+en:"Monkey D. Luffy and his crew sail the world in search of the legendary One Piece.",
+es:"Monkey D. Luffy y su tripulación navegan por el mundo en busca del legendario One Piece."
+},
+
+"Jujutsu Kaisen":{
+pt:"Yuji Itadori entra no mundo dos feiticeiros após entrar em contato com um objeto amaldiçoado.",
+en:"Yuji Itadori enters the world of sorcerers after coming into contact with a cursed object.",
+es:"Yuji Itadori entra en el mundo de los hechiceros después de entrar en contacto con un objeto maldito."
+},
+
+"Attack on Titan":{
+pt:"A humanidade luta para sobreviver enquanto enfrenta misteriosos Titãs.",
+en:"Humanity fights to survive while facing mysterious Titans.",
+es:"La humanidad lucha por sobrevivir mientras enfrenta misteriosos Titanes."
+},
+
+"Dragon Ball":{
+pt:"Goku vive aventuras e enfrenta poderosos adversários enquanto busca ficar cada vez mais forte.",
+en:"Goku goes on adventures and faces powerful opponents while becoming stronger.",
+es:"Goku vive aventuras y enfrenta poderosos enemigos mientras busca hacerse cada vez más fuerte."
+},
+
+"Bleach":{
+pt:"Ichigo Kurosaki ganha poderes de Shinigami e passa a proteger o mundo dos espíritos malignos.",
+en:"Ichigo Kurosaki gains Shinigami powers and begins protecting the world from evil spirits.",
+es:"Ichigo Kurosaki obtiene poderes de Shinigami y comienza a proteger el mundo de los espíritus malignos."
+},
+
+"My Hero Academia":{
+pt:"Izuku Midoriya sonha em se tornar um grande herói em um mundo onde quase todos possuem poderes.",
+en:"Izuku Midoriya dreams of becoming a great hero in a world where almost everyone has powers.",
+es:"Izuku Midoriya sueña con convertirse en un gran héroe en un mundo donde casi todos tienen poderes."
+},
+
+"Hunter x Hunter":{
+pt:"Gon Freecss parte em uma jornada para se tornar Hunter e encontrar seu pai.",
+en:"Gon Freecss begins a journey to become a Hunter and find his father.",
+es:"Gon Freecss comienza un viaje para convertirse en Hunter y encontrar a su padre."
+},
+
+"Solo Leveling":{
+pt:"Sung Jin-Woo começa como o caçador mais fraco e recebe uma habilidade que permite evoluir.",
+en:"Sung Jin-Woo starts as the weakest hunter and gains an ability that allows him to level up.",
+es:"Sung Jin-Woo comienza como el cazador más débil y obtiene una habilidad que le permite subir de nivel."
+},
+
+"Chainsaw Man":{
+pt:"Denji luta contra demônios enquanto tenta conquistar uma vida normal.",
+en:"Denji fights demons while trying to achieve a normal life.",
+es:"Denji lucha contra demonios mientras intenta conseguir una vida normal."
+},
+
+"Black Clover":{
+pt:"Asta, um garoto sem magia, busca se tornar o Rei Mago.",
+en:"Asta, a boy without magic, seeks to become the Wizard King.",
+es:"Asta, un chico sin magia, busca convertirse en el Rey Mago."
+},
+
+"Fairy Tail":{
+pt:"Lucy entra para a guilda Fairy Tail e vive aventuras ao lado de seus companheiros.",
+en:"Lucy joins the Fairy Tail guild and goes on adventures with her companions.",
+es:"Lucy se une al gremio Fairy Tail y vive aventuras junto a sus compañeros."
+},
+
+"Steins;Gate":{
+pt:"Um grupo de amigos descobre uma maneira de enviar mensagens para o passado.",
+en:"A group of friends discovers a way to send messages to the past.",
+es:"Un grupo de amigos descubre una forma de enviar mensajes al pasado."
+},
+
+"Blue Exorcist":{
+pt:"Rin Okumura descobre que é filho de Satanás e decide se tornar um exorcista.",
+en:"Rin Okumura discovers that he is Satan's son and decides to become an exorcist.",
+es:"Rin Okumura descubre que es hijo de Satanás y decide convertirse en exorcista."
+},
+
+"Sword Art Online":{
+pt:"Jogadores ficam presos em um mundo virtual onde precisam sobreviver para escapar.",
+en:"Players become trapped in a virtual world where they must survive to escape.",
+es:"Los jugadores quedan atrapados en un mundo virtual donde deben sobrevivir para escapar."
+},
+
+"One Punch Man":{
+pt:"Saitama consegue derrotar seus inimigos com apenas um soco.",
+en:"Saitama can defeat his enemies with just one punch.",
+es:"Saitama puede derrotar a sus enemigos con un solo golpe."
+},
+
+"Dr. Stone":{
+pt:"Senku tenta reconstruir a civilização usando ciência depois que a humanidade é petrificada.",
+en:"Senku tries to rebuild civilization using science after humanity is petrified.",
+es:"Senku intenta reconstruir la civilización usando la ciencia después de que la humanidad queda petrificada."
+},
+
+"Re:Zero":{
+pt:"Subaru descobre que possui o poder de retornar ao passado depois de morrer.",
+en:"Subaru discovers that he can return to the past after dying.",
+es:"Subaru descubre que puede regresar al pasado después de morir."
+},
+
+"Frieren: Beyond Journey's End":{
+pt:"Frieren começa uma nova jornada depois do fim da grande aventura de seu grupo.",
+en:"Frieren begins a new journey after the end of her group's great adventure.",
+es:"Frieren comienza un nuevo viaje después del final de la gran aventura de su grupo."
+},
+
+"Haikyuu!!":{
+pt:"Hinata entra no mundo do vôlei e busca se tornar um grande jogador.",
+en:"Hinata enters the world of volleyball and seeks to become a great player.",
+es:"Hinata entra en el mundo del voleibol y busca convertirse en un gran jugador."
+}
+
+};
+
+function getDescription(title){
+
+    const d=descriptions[title];
+
+    if(!d){
+
+        return currentLanguage==="en"
+            ? "Explore this anime on ANIMEWIKI."
+            : currentLanguage==="es"
+            ? "Explora este anime en ANIMEWIKI."
+            : "Explore este anime no ANIMEWIKI.";
+
+    }
+
+    return d[currentLanguage];
+
+}
+
+
+function getGenres(genres){
+
+    if(currentLanguage==="pt"){
+        return genres;
+    }
+
+    const map={
+
+        "Ação":"Action",
+        "Aventura":"Adventure",
+        "Fantasia":"Fantasy",
+        "Sobrenatural":"Supernatural",
+        "Drama":"Drama",
+        "Ficção científica":"Science Fiction",
+        "Suspense":"Thriller",
+        "Horror":"Horror",
+        "Comédia":"Comedy",
+        "Esporte":"Sports",
+        "Super-herói":"Superhero"
+
+    };
+
+    let result=genres;
+
+    Object.keys(map).forEach(key=>{
+        result=
+            result.replace(
+                key,
+                map[key]
+            );
+    });
+
+    if(currentLanguage==="es"){
+
+        const es={
+
+            "Action":"Acción",
+            "Adventure":"Aventura",
+            "Fantasy":"Fantasía",
+            "Supernatural":"Sobrenatural",
+            "Science Fiction":"Ciencia ficción",
+            "Thriller":"Suspenso",
+            "Horror":"Terror",
+            "Comedy":"Comedia",
+            "Sports":"Deporte",
+            "Superhero":"Superhéroe"
+
+        };
+
+        Object.keys(es).forEach(key=>{
+            result=
+                result.replace(
+                    key,
+                    es[key]
+                );
+        });
+
+    }
+
+    return result;
+
+}
+
+
+/* =========================================================
+   TEMPORADAS
+========================================================= */
+
+function createSeasons(anime){
+
+    const buttons=
+        document.getElementById(
+            "seasonButtons"
+        );
+
+    buttons.innerHTML="";
+
+    anime.seasons.forEach(
+        (count,index)=>{
+
+            const btn=
+                document.createElement(
+                    "button"
+                );
+
+            btn.className=
+                "season-btn";
+
+            btn.textContent=
+                t("season")+
+                " "+
+                (index+1);
+
+            btn.onclick=()=>{
+
+                document
+                    .querySelectorAll(
+                        ".season-btn"
+                    )
+                    .forEach(b=>
+                        b.classList.remove(
+                            "active"
+                        )
+                    );
+
+                btn.classList.add(
+                    "active"
+                );
+
+                showEpisodes(count);
+
+            };
+
+            buttons.appendChild(btn);
+
+        }
+    );
+
+    const first=
+        buttons.querySelector(
+            ".season-btn"
+        );
+
+    if(first){
+
+        first.classList.add(
+            "active"
+        );
+
+        showEpisodes(
+            anime.seasons[0]
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   EPISÓDIOS
+========================================================= */
+
+function showEpisodes(count){
+
+    const list=
+        document.getElementById(
+            "episodeList"
+        );
+
+    list.innerHTML="";
+
+    for(let i=1;i<=count;i++){
+
+        const ep=
+            document.createElement(
+                "div"
+            );
+
+        ep.className="episode";
+
+        ep.textContent=
+            "EP "+i;
+
+        ep.onclick=()=>{
+
+            alert(
+                t("episode")+
+                " "+
+                i+
+                t("selected")
+            );
+
+        };
+
+        list.appendChild(ep);
+
+    }
+
+}
+
+
+/* =========================================================
+   PERSONAGENS
+========================================================= */
+
+async function createCharacters(anime){
+
+    const list=
+        document.getElementById(
+            "characterList"
+        );
+
+    list.innerHTML=`
+        <div class="character-loading">
+            ${t("loading")}
+        </div>
+    `;
+
+    const query=`
+
+        query($search:String){
+
+            Media(
+                search:$search,
+                type:ANIME
+            ){
+
+                id
+
+                characters(
+                    page:1,
+                    perPage:18
+                ){
+
+                    edges{
+
+                        node{
+
+                            id
+
+                            name{
+                                first
+                                middle
+                                last
+                                full
+                                native
+                            }
+
+                            image{
+                                large
+                                medium
+                            }
+
+                            description
+
+                            gender
+
+                            age
+
+                            bloodType
+
+                            dateOfBirth{
+                                year
+                                month
+                                day
+                            }
+
+                            media(
+                                page:1,
+                                perPage:8
+                            ){
+
+                                nodes{
+
+                                    title{
+                                        romaji
+                                        english
+                                        native
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                        voiceActors{
+
+                            id
+
+                            name{
+                                full
+                            }
+
+                            languageV2
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    `;
+
+    try{
+
+        const response=
+            await fetch(
+                "https://graphql.anilist.co",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        query:query,
+
+                        variables:{
+                            search:anime.search
+                        }
+
+                    })
+
+                }
+            );
+
+        const data=
+            await response.json();
+
+        if(
+            data.errors ||
+            !data.data ||
+            !data.data.Media
+        ){
+
+            list.innerHTML=`
+                <p style="color:#888">
+                    ${t("error")}
+                </p>
+            `;
+
+            return;
+
+        }
+
+        const edges=
+            data.data.Media.characters &&
+            data.data.Media.characters.edges
+            ? data.data.Media.characters.edges
+            : [];
+
+        list.innerHTML="";
+
+        if(!edges.length){
+
+            list.innerHTML=`
+                <p style="color:#888">
+                    ${t("notFound")}
+                </p>
+            `;
+
+            return;
+
+        }
+
+        edges.forEach(edge=>{
+
+            const char=edge.node;
+
+            if(!char){
+                return;
+            }
+
+            const card=
+                document.createElement(
+                    "div"
+                );
+
+            card.className=
+                "character-card";
+
+            const originalName=
+                char.name &&
+                char.name.full
+                ? char.name.full
+                : [
+                    char.name?.first,
+                    char.name?.middle,
+                    char.name?.last
+                ]
+                .filter(Boolean)
+                .join(" ");
+
+            const fullName=
+                fixCharacterName(
+                    originalName
+                );
+
+            card.onclick=()=>{
+
+                openCharacter(
+                    char,
+                    anime.title,
+                    fullName,
+                    edge.voiceActors || []
+                );
+
+            };
+
+            const img=
+                document.createElement(
+                    "img"
+                );
+
+            img.alt=fullName;
+
+            img.src=
+                (
+                    char.image &&
+                    (
+                        char.image.large ||
+                        char.image.medium
+                    )
+                ) ||
+                placeholder(fullName);
+
+            img.onerror=()=>{
+                img.src=
+                    placeholder(fullName);
+            };
+
+            const name=
+                document.createElement(
+                    "div"
+                );
+
+            name.className=
+                "character-name";
+
+            name.textContent=
+                fullName;
+
+            card.appendChild(img);
+            card.appendChild(name);
+
+            list.appendChild(card);
+
+        });
+
+    }catch(error){
+
+        console.log(
+            "Erro ao carregar personagens:",
+            error
+        );
+
+        list.innerHTML=`
+            <p style="color:#888">
+                ${t("internet")}
+            </p>
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   LIMPAR DESCRIÇÃO
+========================================================= */
+
+function cleanDescription(text){
+
+    if(!text){
+        return t("noInfo");
+    }
+
+    return text
+        .replace(/<br\s*\/?>/gi,"\n")
+        .replace(/<[^>]*>/g,"")
+        .replace(/&quot;/g,'"')
+        .replace(/&#039;/g,"'")
+        .replace(/&amp;/g,"&")
+        .replace(/\n{3,}/g,"\n\n")
+        .trim();
+
+}
+
+
+/* =========================================================
+   DATA
+========================================================= */
+
+function formatBirthday(date){
+
+    if(
+        !date ||
+        (
+            !date.day &&
+            !date.month &&
+            !date.year
+        )
+    ){
+
+        return t("noInfo");
+
+    }
+
+    const day=
+        date.day
+        ? String(date.day).padStart(2,"0")
+        : "--";
+
+    const month=
+        date.month
+        ? String(date.month).padStart(2,"0")
+        : "--";
+
+    const year=
+        date.year || "----";
+
+    return `${day}/${month}/${year}`;
+
+}
+
+
+/* =========================================================
+   TRADUZIR ALGUNS CAMPOS DA API
+========================================================= */
+
+function translateGender(value){
+
+    if(!value){
+        return t("noInfo");
+    }
+
+    const v=
+        value.toLowerCase();
+
+    if(currentLanguage==="pt"){
+
+        if(v==="male")
+            return "Masculino";
+
+        if(v==="female")
+            return "Feminino";
+
+        if(v==="non-binary")
+            return "Não binário";
+
+    }
+
+    if(currentLanguage==="es"){
+
+        if(v==="male")
+            return "Masculino";
+
+        if(v==="female")
+            return "Femenino";
+
+        if(v==="non-binary")
+            return "No binario";
+
+    }
+
+    if(currentLanguage==="en"){
+
+        if(v==="male")
+            return "Male";
+
+        if(v==="female")
+            return "Female";
+
+        if(v==="non-binary")
+            return "Non-binary";
+
+    }
+
+    return value;
+
+}
+
+
+/* =========================================================
+   PERSONAGEM
+========================================================= */
+
+let previousAnime=null;
+
+async function openCharacter(
+    char,
+    animeTitle,
+    fullName,
+    voiceActors=[]
+){
+
+    previousAnime=currentAnime;
+
+    document
+        .getElementById("homePage")
+        .classList
+        .remove("active");
+
+    document
+        .getElementById("animePage")
+        .classList
+        .remove("active");
+
+    document
+        .getElementById("questionsPage")
+        .classList
+        .remove("active");
+
+    document
+        .getElementById("characterPage")
+        .classList
+        .add("active");
+
+
+    const image=
+        document.getElementById(
+            "characterBigImage"
+        );
+
+    image.src=
+        (
+            char.image &&
+            (
+                char.image.large ||
+                char.image.medium
+            )
+        ) ||
+        placeholder(fullName);
+
+    image.alt=fullName;
+
+    image.onerror=()=>{
+        image.src=
+            placeholder(fullName);
+    };
+
+
+    document
+        .getElementById(
+            "characterBigName"
+        )
+        .textContent=fullName;
+
+
+    document
+        .getElementById(
+            "characterAnime"
+        )
+        .textContent=animeTitle;
+
+
+    document
+        .getElementById(
+            "characterJapanese"
+        )
+        .textContent=
+            char.name &&
+            char.name.native
+            ? char.name.native
+            : t("noInfo");
+
+
+    document
+        .getElementById(
+            "characterBirthday"
+        )
+        .textContent=
+            formatBirthday(
+                char.dateOfBirth
+            );
+
+
+    document
+        .getElementById(
+            "characterAge"
+        )
+        .textContent=
+            char.age
+            ? char.age
+            : t("noInfo");
+
+
+    document
+        .getElementById(
+            "characterGender"
+        )
+        .textContent=
+            translateGender(
+                char.gender
+            );
+
+
+    document
+        .getElementById(
+            "characterBlood"
+        )
+        .textContent=
+            char.bloodType ||
+            t("noInfo");
+
+
+    let voice=
+        t("noInfo");
+
+    if(
+        voiceActors &&
+        voiceActors.length
+    ){
+
+        const japaneseVoice=
+            voiceActors.find(
+                actor=>
+                    actor.languageV2==="Japanese"
+            );
+
+        if(japaneseVoice){
+
+            voice=
+                japaneseVoice.name.full ||
+                t("noInfo");
+
+        }
+
+    }
+
+    document
+        .getElementById(
+            "characterVoice"
+        )
+        .textContent=voice;
+
+
+    const bigDescription=
+        document.getElementById(
+            "characterBigDescription"
+        );
+
+    const fullDescription=
+        document.getElementById(
+            "characterFullDescription"
+        );
+
+    bigDescription.textContent=
+        t("loading");
+
+    fullDescription.textContent=
+        t("loading");
+
+    const description=
+        await getCharacterDescription(
+            fullName,
+            char.description
+        );
+
+    bigDescription.textContent=
+        description;
+
+    fullDescription.textContent=
+        description;
+
+
+    const other=
+        document.getElementById(
+            "characterOtherAnime"
+        );
+
+    other.innerHTML="";
+
+    const titles=[];
+
+    if(
+        char.media &&
+        char.media.nodes
+    ){
+
+        char.media.nodes.forEach(
+            media=>{
+
+                const title=
+                    media.title.english ||
+                    media.title.romaji ||
+                    media.title.native;
+
+                if(
+                    title &&
+                    !titles.includes(title)
+                ){
+
+                    titles.push(title);
+
+                }
+
+            }
+        );
+
+    }
+
+    if(!titles.length){
+
+        other.innerHTML=`
+            <span class="character-anime-tag">
+                ${t("noOther")}
+            </span>
+        `;
+
+    }else{
+
+        titles.forEach(title=>{
+
+            const tag=
+                document.createElement(
+                    "span"
+                );
+
+            tag.className=
+                "character-anime-tag";
+
+            tag.textContent=title;
+
+            other.appendChild(tag);
+
+        });
+
+    }
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* =========================================================
+   VOLTAR PARA O ANIME
+========================================================= */
+
+function backToAnime(){
+
+    document
+        .getElementById(
+            "characterPage"
+        )
+        .classList
+        .remove("active");
+
+    document
+        .getElementById(
+            "questionsPage"
+        )
+        .classList
+        .remove("active");
+
+    document
+        .getElementById(
+            "animePage"
+        )
+        .classList
+        .add("active");
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* =========================================================
+   HOME
+========================================================= */
+
+function showHome(){
+
+    document
+        .getElementById(
+            "homePage"
+        )
+        .classList
+        .add("active");
+
+    document
+        .getElementById(
+            "animePage"
+        )
+        .classList
+        .remove("active");
+
+    document
+        .getElementById(
+            "characterPage"
+        )
+        .classList
+        .remove("active");
+
+    document
+        .getElementById(
+            "questionsPage"
+        )
+        .classList
+        .remove("active");
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* =========================================================
+   ÁREA DE PERGUNTAS
+========================================================= */
+
+function showQuestions(){
+
+    document
+        .getElementById("homePage")
+        .classList
+        .remove("active");
+
+    document
+        .getElementById("animePage")
+        .classList
+        .remove("active");
+
+    document
+        .getElementById("characterPage")
+        .classList
+        .remove("active");
+
+    document
+        .getElementById("questionsPage")
+        .classList
+        .add("active");
+
+    const input=
+        document.getElementById(
+            "questionInput"
+        );
+
+    const answer=
+        document.getElementById(
+            "questionAnswer"
+        );
+
+    answer.textContent=
+        t("questionInitial");
+
+    input.focus();
+
+    window.scrollTo(0,0);
+
+}
+
+
+function normalizeQuestion(text){
+
+    return text
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g,"")
+        .replace(/[?!.,;:'"]/g,"")
+        .replace(/\s+/g," ")
+        .trim();
+
+}
+
+
+function questionContains(text,words){
+
+    return words.some(word =>
+        text.includes(
+            normalizeQuestion(word)
+        )
+    );
+
+}
+
+
+/* =========================================================
+   PERSONAGENS PARA PERGUNTAS
+========================================================= */
+
+const questionCharacters={
+
+    yuji:{
+        aliases:[
+            "yuji",
+            "yuji itadori"
+        ],
+
+        name:"Yuji Itadori",
+
+        anime:{
+            pt:"Jujutsu Kaisen",
+            en:"Jujutsu Kaisen",
+            es:"Jujutsu Kaisen"
+        },
+
+        age:{
+            pt:"Yuji Itadori tem 15 anos no início de Jujutsu Kaisen.",
+            en:"Yuji Itadori is 15 years old at the beginning of Jujutsu Kaisen.",
+            es:"Yuji Itadori tiene 15 años al comienzo de Jujutsu Kaisen."
+        },
+
+        power:{
+            pt:"Yuji é um recipiente de Ryomen Sukuna e possui grande força física e habilidades de combate.",
+            en:"Yuji is Ryomen Sukuna's vessel and has great physical strength and combat abilities.",
+            es:"Yuji es el recipiente de Ryomen Sukuna y posee una gran fuerza física y habilidades de combate."
+        },
+
+        who:{
+            pt:"Yuji Itadori é o protagonista de Jujutsu Kaisen.",
+            en:"Yuji Itadori is the protagonist of Jujutsu Kaisen.",
+            es:"Yuji Itadori es el protagonista de Jujutsu Kaisen."
+        }
+    },
+
+    gojo:{
+        aliases:[
+            "gojo",
+            "satoru gojo"
+        ],
+
+        name:"Satoru Gojo",
+
+        anime:{
+            pt:"Jujutsu Kaisen",
+            en:"Jujutsu Kaisen",
+            es:"Jujutsu Kaisen"
+        },
+
+        age:{
+            pt:"Satoru Gojo tem 28 anos.",
+            en:"Satoru Gojo is 28 years old.",
+            es:"Satoru Gojo tiene 28 años."
+        },
+
+        power:{
+            pt:"Gojo utiliza as técnicas Ilimitado e Seis Olhos.",
+            en:"Gojo uses the Limitless and Six Eyes techniques.",
+            es:"Gojo utiliza las técnicas Ilimitado y Seis Ojos."
+        },
+
+        who:{
+            pt:"Satoru Gojo é um dos principais feiticeiros de Jujutsu Kaisen e professor da Escola Técnica de Jujutsu de Tóquio.",
+            en:"Satoru Gojo is one of the main sorcerers in Jujutsu Kaisen and a teacher at Tokyo Jujutsu High.",
+            es:"Satoru Gojo es uno de los principales hechiceros de Jujutsu Kaisen y profesor de la Escuela Técnica de Hechicería de Tokio."
+        }
+    },
+
+    naruto:{
+        aliases:[
+            "naruto",
+            "naruto uzumaki"
+        ],
+
+        name:"Naruto Uzumaki",
+
+        anime:{
+            pt:"Naruto",
+            en:"Naruto",
+            es:"Naruto"
+        },
+
+        age:{
+            pt:"Naruto começa a história com 12 anos e chega a 17 anos na fase final de Naruto Shippuden.",
+            en:"Naruto starts the story at 12 and reaches 17 during the final part of Naruto Shippuden.",
+            es:"Naruto comienza la historia con 12 años y llega a 17 durante la parte final de Naruto Shippuden."
+        },
+
+        power:{
+            pt:"Naruto possui o chakra da Kurama e utiliza várias técnicas ninja, incluindo o Rasengan.",
+            en:"Naruto has Kurama's chakra and uses many ninja techniques, including the Rasengan.",
+            es:"Naruto posee el chakra de Kurama y utiliza muchas técnicas ninja, incluyendo el Rasengan."
+        },
+
+        who:{
+            pt:"Naruto Uzumaki é o protagonista de Naruto.",
+            en:"Naruto Uzumaki is the protagonist of Naruto.",
+            es:"Naruto Uzumaki es el protagonista de Naruto."
+        }
+    },
+
+    luffy:{
+        aliases:[
+            "luffy",
+            "monkey d luffy",
+            "monkey d. luffy"
+        ],
+
+        name:"Monkey D. Luffy",
+
+        anime:{
+            pt:"One Piece",
+            en:"One Piece",
+            es:"One Piece"
+        },
+
+        age:{
+            pt:"Monkey D. Luffy tem 19 anos após o timeskip.",
+            en:"Monkey D. Luffy is 19 years old after the timeskip.",
+            es:"Monkey D. Luffy tiene 19 años después del timeskip."
+        },
+
+        power:{
+            pt:"Luffy possui poderes de uma Akuma no Mi e é um lutador extremamente habilidoso.",
+            en:"Luffy has the powers of a Devil Fruit and is an extremely skilled fighter.",
+            es:"Luffy posee los poderes de una Fruta del Diablo y es un luchador extremadamente habilidoso."
+        },
+
+        who:{
+            pt:"Monkey D. Luffy é o protagonista e capitão dos Piratas do Chapéu de Palha.",
+            en:"Monkey D. Luffy is the protagonist and captain of the Straw Hat Pirates.",
+            es:"Monkey D. Luffy es el protagonista y capitán de los Piratas del Sombrero de Paja."
+        }
+    },
+
+    tanjiro:{
+        aliases:[
+            "tanjiro",
+            "tanjiro kamado"
+        ],
+
+        name:"Tanjiro Kamado",
+
+        anime:{
+            pt:"Demon Slayer",
+            en:"Demon Slayer",
+            es:"Demon Slayer"
+        },
+
+        age:{
+            pt:"Tanjiro Kamado tem 15 anos durante grande parte de Demon Slayer.",
+            en:"Tanjiro Kamado is 15 years old during much of Demon Slayer.",
+            es:"Tanjiro Kamado tiene 15 años durante gran parte de Demon Slayer."
+        },
+
+        power:{
+            pt:"Tanjiro usa técnicas de Respiração da Água e posteriormente outras habilidades de combate.",
+            en:"Tanjiro uses Water Breathing techniques and later develops other combat abilities.",
+            es:"Tanjiro usa técnicas de Respiración del Agua y posteriormente desarrolla otras habilidades de combate."
+        },
+
+        who:{
+            pt:"Tanjiro Kamado é o protagonista de Demon Slayer.",
+            en:"Tanjiro Kamado is the protagonist of Demon Slayer.",
+            es:"Tanjiro Kamado es el protagonista de Demon Slayer."
+        }
+    },
+
+    nezuko:{
+        aliases:[
+            "nezuko",
+            "nezuko kamado"
+        ],
+
+        name:"Nezuko Kamado",
+
+        anime:{
+            pt:"Demon Slayer",
+            en:"Demon Slayer",
+            es:"Demon Slayer"
+        },
+
+        age:{
+            pt:"Nezuko tem 12 anos no início da história e 14 anos depois do salto temporal.",
+            en:"Nezuko is 12 years old at the beginning of the story and 14 after the time skip.",
+            es:"Nezuko tiene 12 años al comienzo de la historia y 14 después del salto temporal."
+        },
+
+        sister:{
+            pt:"Nezuko Kamado é a irmã de Tanjiro.",
+            en:"Nezuko Kamado is Tanjiro's sister.",
+            es:"Nezuko Kamado es la hermana de Tanjiro."
+        },
+
+        who:{
+            pt:"Nezuko Kamado é a irmã de Tanjiro e uma das personagens principais de Demon Slayer.",
+            en:"Nezuko Kamado is Tanjiro's sister and one of the main characters of Demon Slayer.",
+            es:"Nezuko Kamado es la hermana de Tanjiro y uno de los personajes principales de Demon Slayer."
+        }
+    },
+
+    jinwoo:{
+        aliases:[
+            "jinwoo",
+            "jin woo",
+            "sung jinwoo",
+            "sung jin woo",
+            "sung jin-woo"
+        ],
+
+        name:"Sung Jin-Woo",
+
+        anime:{
+            pt:"Solo Leveling",
+            en:"Solo Leveling",
+            es:"Solo Leveling"
+        },
+
+        age:{
+            pt:"Sung Jin-Woo tem cerca de 20 anos no início da história.",
+            en:"Sung Jin-Woo is around 20 years old at the beginning of the story.",
+            es:"Sung Jin-Woo tiene alrededor de 20 años al comienzo de la historia."
+        },
+
+        power:{
+            pt:"Sung Jin-Woo possui o Sistema, que permite que ele evolua e fique cada vez mais poderoso.",
+            en:"Sung Jin-Woo possesses the System, which allows him to level up and become increasingly powerful.",
+            es:"Sung Jin-Woo posee el Sistema, que le permite subir de nivel y hacerse cada vez más poderoso."
+        },
+
+        who:{
+            pt:"Sung Jin-Woo é o protagonista de Solo Leveling.",
+            en:"Sung Jin-Woo is the protagonist of Solo Leveling.",
+            es:"Sung Jin-Woo es el protagonista de Solo Leveling."
+        }
+    },
+
+    ichigo:{
+        aliases:[
+            "ichigo",
+            "ichigo kurosaki"
+        ],
+
+        name:"Ichigo Kurosaki",
+
+        anime:{
+            pt:"Bleach",
+            en:"Bleach",
+            es:"Bleach"
+        },
+
+        age:{
+            pt:"Ichigo tem 15 anos no início de Bleach.",
+            en:"Ichigo is 15 years old at the beginning of Bleach.",
+            es:"Ichigo tiene 15 años al comienzo de Bleach."
+        },
+
+        power:{
+            pt:"Ichigo possui poderes de Shinigami e outras habilidades espirituais.",
+            en:"Ichigo has Shinigami powers and other spiritual abilities.",
+            es:"Ichigo posee poderes de Shinigami y otras habilidades espirituales."
+        },
+
+        who:{
+            pt:"Ichigo Kurosaki é o protagonista de Bleach.",
+            en:"Ichigo Kurosaki is the protagonist of Bleach.",
+            es:"Ichigo Kurosaki es el protagonista de Bleach."
+        }
+    },
+
+    deku:{
+        aliases:[
+            "deku",
+            "midoriya",
+            "izuku",
+            "izuku midoriya"
+        ],
+
+        name:"Izuku Midoriya",
+
+        anime:{
+            pt:"My Hero Academia",
+            en:"My Hero Academia",
+            es:"My Hero Academia"
+        },
+
+        age:{
+            pt:"Izuku Midoriya começa My Hero Academia com 14 anos.",
+            en:"Izuku Midoriya begins My Hero Academia at 14 years old.",
+            es:"Izuku Midoriya comienza My Hero Academia con 14 años."
+        },
+
+        power:{
+            pt:"O principal poder de Midoriya é o One For All.",
+            en:"Midoriya's main power is One For All.",
+            es:"El principal poder de Midoriya es One For All."
+        },
+
+        who:{
+            pt:"Izuku Midoriya é o protagonista de My Hero Academia.",
+            en:"Izuku Midoriya is the protagonist of My Hero Academia.",
+            es:"Izuku Midoriya es el protagonista de My Hero Academia."
+        }
+    },
+
+    gon:{
+        aliases:[
+            "gon",
+            "gon freecss"
+        ],
+
+        name:"Gon Freecss",
+
+        anime:{
+            pt:"Hunter x Hunter",
+            en:"Hunter x Hunter",
+            es:"Hunter x Hunter"
+        },
+
+        age:{
+            pt:"Gon tem 12 anos no início de Hunter x Hunter.",
+            en:"Gon is 12 years old at the beginning of Hunter x Hunter.",
+            es:"Gon tiene 12 años al comienzo de Hunter x Hunter."
+        },
+
+        who:{
+            pt:"Gon Freecss é o protagonista de Hunter x Hunter.",
+            en:"Gon Freecss is the protagonist of Hunter x Hunter.",
+            es:"Gon Freecss es el protagonista de Hunter x Hunter."
+        }
+    },
+
+    denji:{
+        aliases:[
+            "denji"
+        ],
+
+        name:"Denji",
+
+        anime:{
+            pt:"Chainsaw Man",
+            en:"Chainsaw Man",
+            es:"Chainsaw Man"
+        },
+
+        age:{
+            pt:"Denji tem cerca de 16 anos no começo de Chainsaw Man.",
+            en:"Denji is around 16 years old at the beginning of Chainsaw Man.",
+            es:"Denji tiene alrededor de 16 años al comienzo de Chainsaw Man."
+        },
+
+        power:{
+            pt:"Denji pode se transformar no Chainsaw Man após fazer um contrato com Pochita.",
+            en:"Denji can transform into Chainsaw Man after making a contract with Pochita.",
+            es:"Denji puede transformarse en Chainsaw Man después de hacer un contrato con Pochita."
+        },
+
+        who:{
+            pt:"Denji é o protagonista de Chainsaw Man.",
+            en:"Denji is the protagonist of Chainsaw Man.",
+            es:"Denji es el protagonista de Chainsaw Man."
+        }
+    },
+
+    asta:{
+        aliases:[
+            "asta"
+        ],
+
+        name:"Asta",
+
+        anime:{
+            pt:"Black Clover",
+            en:"Black Clover",
+            es:"Black Clover"
+        },
+
+        age:{
+            pt:"Asta tem 15 anos no início de Black Clover.",
+            en:"Asta is 15 years old at the beginning of Black Clover.",
+            es:"Asta tiene 15 años al comienzo de Black Clover."
+        },
+
+        power:{
+            pt:"Asta usa anti-magia através do grimório de cinco folhas.",
+            en:"Asta uses anti-magic through his five-leaf grimoire.",
+            es:"Asta utiliza anti-magia mediante su grimorio de cinco hojas."
+        },
+
+        who:{
+            pt:"Asta é o protagonista de Black Clover.",
+            en:"Asta is the protagonist of Black Clover.",
+            es:"Asta es el protagonista de Black Clover."
+        }
+    },
+
+    okabe:{
+        aliases:[
+            "okabe",
+            "rintaro",
+            "rintaro okabe"
+        ],
+
+        name:"Rintaro Okabe",
+
+        anime:{
+            pt:"Steins;Gate",
+            en:"Steins;Gate",
+            es:"Steins;Gate"
+        },
+
+        who:{
+            pt:"Rintaro Okabe é o protagonista de Steins;Gate.",
+            en:"Rintaro Okabe is the protagonist of Steins;Gate.",
+            es:"Rintaro Okabe es el protagonista de Steins;Gate."
+        }
+    },
+
+    kirito:{
+        aliases:[
+            "kirito",
+            "kazuto",
+            "kazuto kirigaya"
+        ],
+
+        name:"Kirito",
+
+        anime:{
+            pt:"Sword Art Online",
+            en:"Sword Art Online",
+            es:"Sword Art Online"
+        },
+
+        power:{
+            pt:"Kirito é um espadachim extremamente habilidoso em mundos virtuais.",
+            en:"Kirito is an extremely skilled swordsman in virtual worlds.",
+            es:"Kirito es un espadachín extremadamente hábil en mundos virtuales."
+        },
+
+        who:{
+            pt:"Kirito é o principal protagonista de Sword Art Online.",
+            en:"Kirito is the main protagonist of Sword Art Online.",
+            es:"Kirito es el principal protagonista de Sword Art Online."
+        }
+    },
+
+    saitama:{
+        aliases:[
+            "saitama"
+        ],
+
+        name:"Saitama",
+
+        anime:{
+            pt:"One Punch Man",
+            en:"One Punch Man",
+            es:"One Punch Man"
+        },
+
+        power:{
+            pt:"Saitama consegue derrotar a maioria dos inimigos com apenas um soco.",
+            en:"Saitama can defeat most enemies with just one punch.",
+            es:"Saitama puede derrotar a la mayoría de los enemigos con un solo golpe."
+        },
+
+        who:{
+            pt:"Saitama é o protagonista de One Punch Man.",
+            en:"Saitama is the protagonist of One Punch Man.",
+            es:"Saitama es el protagonista de One Punch Man."
+        }
+    },
+
+    senku:{
+        aliases:[
+            "senku",
+            "senku ishigami"
+        ],
+
+        name:"Senku Ishigami",
+
+        anime:{
+            pt:"Dr. Stone",
+            en:"Dr. Stone",
+            es:"Dr. Stone"
+        },
+
+        power:{
+            pt:"A principal habilidade de Senku é seu enorme conhecimento científico.",
+            en:"Senku's main ability is his enormous scientific knowledge.",
+            es:"La principal habilidad de Senku es su enorme conocimiento científico."
+        },
+
+        who:{
+            pt:"Senku Ishigami é o protagonista de Dr. Stone.",
+            en:"Senku Ishigami is the protagonist of Dr. Stone.",
+            es:"Senku Ishigami es el protagonista de Dr. Stone."
+        }
+    },
+
+    subaru:{
+        aliases:[
+            "subaru",
+            "subaru natsuki"
+        ],
+
+        name:"Subaru Natsuki",
+
+        anime:{
+            pt:"Re:Zero",
+            en:"Re:Zero",
+            es:"Re:Zero"
+        },
+
+        power:{
+            pt:"Subaru possui a habilidade Retorno pela Morte.",
+            en:"Subaru possesses the Return by Death ability.",
+            es:"Subaru posee la habilidad Retorno por la Muerte."
+        },
+
+        who:{
+            pt:"Subaru Natsuki é o protagonista de Re:Zero.",
+            en:"Subaru Natsuki is the protagonist of Re:Zero.",
+            es:"Subaru Natsuki es el protagonista de Re:Zero."
+        }
+    },
+
+    frieren:{
+        aliases:[
+            "frieren"
+        ],
+
+        name:"Frieren",
+
+        anime:{
+            pt:"Frieren: Beyond Journey's End",
+            en:"Frieren: Beyond Journey's End",
+            es:"Frieren: Beyond Journey's End"
+        },
+
+        who:{
+            pt:"Frieren é a protagonista de Frieren: Beyond Journey's End.",
+            en:"Frieren is the protagonist of Frieren: Beyond Journey's End.",
+            es:"Frieren es la protagonista de Frieren: Beyond Journey's End."
+        }
+    },
+
+    hinata:{
+        aliases:[
+            "hinata",
+            "shoyo",
+            "shoyo hinata"
+        ],
+
+        name:"Shoyo Hinata",
+
+        anime:{
+            pt:"Haikyuu!!",
+            en:"Haikyuu!!",
+            es:"Haikyuu!!"
+        },
+
+        who:{
+            pt:"Shoyo Hinata é um dos protagonistas de Haikyuu!!.",
+            en:"Shoyo Hinata is one of the protagonists of Haikyuu!!.",
+            es:"Shoyo Hinata es uno de los protagonistas de Haikyuu!!."
+        }
+    }
+
+};
+
+
+/* =========================================================
+   PROTAGONISTAS DOS 21 ANIMES
+========================================================= */
+
+const animeProtagonists={
+
+    "Demon Slayer":"Tanjiro Kamado",
+    "Naruto":"Naruto Uzumaki",
+    "One Piece":"Monkey D. Luffy",
+    "Jujutsu Kaisen":"Yuji Itadori",
+    "Attack on Titan":"Eren Yeager",
+    "Dragon Ball":"Son Goku",
+    "Bleach":"Ichigo Kurosaki",
+    "My Hero Academia":"Izuku Midoriya",
+    "Hunter x Hunter":"Gon Freecss",
+    "Solo Leveling":"Sung Jin-Woo",
+    "Chainsaw Man":"Denji",
+    "Black Clover":"Asta",
+    "Fairy Tail":"Natsu Dragneel",
+    "Steins;Gate":"Rintaro Okabe",
+    "Blue Exorcist":"Rin Okumura",
+    "Sword Art Online":"Kirito",
+    "One Punch Man":"Saitama",
+    "Dr. Stone":"Senku Ishigami",
+    "Re:Zero":"Subaru Natsuki",
+    "Frieren: Beyond Journey's End":"Frieren",
+    "Haikyuu!!":"Shoyo Hinata"
+
+};
+
+
+/* =========================================================
+   TRADUÇÃO DE NOME DO ANIME NA RESPOSTA
+========================================================= */
+
+function animeQuestionAnswer(anime,question){
+
+    const q=
+        normalizeQuestion(question);
+
+    const yearWords=[
+        "ano",
+        "ano de",
+        "year",
+        "release",
+        "lancou",
+        "lancamento"
+    ];
+
+    const episodeWords=[
+        "episodio",
+        "episodios",
+        "episode",
+        "episodes"
+    ];
+
+    const ratingWords=[
+        "nota",
+        "rating",
+        "score",
+        "avaliacao"
+    ];
+
+    const genreWords=[
+        "genero",
+        "generos",
+        "genre",
+        "genres"
+    ];
+
+    const protagonistWords=[
+        "protagonista",
+        "personagem principal",
+        "principal",
+        "protagonist",
+        "main character"
+    ];
+
+    if(
+        questionContains(q,episodeWords)
+    ){
+
+        if(currentLanguage==="pt"){
+
+            return `${anime.title} tem ${anime.episodes} episódios cadastrados no ANIMEWIKI.`;
+
+        }
+
+        if(currentLanguage==="en"){
+
+            return `${anime.title} has ${anime.episodes} episodes listed in ANIMEWIKI.`;
+
+        }
+
+        return `${anime.title} tiene ${anime.episodes} episodios registrados en ANIMEWIKI.`;
+
+    }
+
+    if(
+        questionContains(q,yearWords)
+    ){
+
+        if(currentLanguage==="pt"){
+
+            return `${anime.title} começou a ser exibido em ${anime.year}.`;
+
+        }
+
+        if(currentLanguage==="en"){
+
+            return `${anime.title} began airing in ${anime.year}.`;
+
+        }
+
+        return `${anime.title} comenzó a emitirse en ${anime.year}.`;
+
+    }
+
+    if(
+        questionContains(q,ratingWords)
+    ){
+
+        if(currentLanguage==="pt"){
+
+            return `A nota cadastrada para ${anime.title} é ⭐ ${anime.rating}.`;
+
+        }
+
+        if(currentLanguage==="en"){
+
+            return `The rating listed for ${anime.title} is ⭐ ${anime.rating}.`;
+
+        }
+
+        return `La nota registrada para ${anime.title} es ⭐ ${anime.rating}.`;
+
+    }
+
+    if(
+        questionContains(q,genreWords)
+    ){
+
+        const genres=
+            getGenres(anime.genres);
+
+        if(currentLanguage==="pt"){
+
+            return `${anime.title} é dos gêneros ${genres}.`;
+
+        }
+
+        if(currentLanguage==="en"){
+
+            return `${anime.title} is in the ${genres} genres.`;
+
+        }
+
+        return `${anime.title} pertenece a los géneros ${genres}.`;
+
+    }
+
+    if(
+        questionContains(q,protagonistWords)
+    ){
+
+        const protagonist=
+            animeProtagonists[anime.title];
+
+        if(protagonist){
+
+            if(currentLanguage==="pt"){
+
+                return `O protagonista de ${anime.title} é ${protagonist}.`;
+
+            }
+
+            if(currentLanguage==="en"){
+
+                return `The protagonist of ${anime.title} is ${protagonist}.`;
+
+            }
+
+            return `El protagonista de ${anime.title} es ${protagonist}.`;
+
+        }
+
+    }
+
+    return null;
+
+}
+
+
+/* =========================================================
+   ACHAR PERSONAGEM
+========================================================= */
+
+function findQuestionCharacter(question){
+
+    const q=
+        normalizeQuestion(question);
+
+    for(
+        const key of Object.keys(questionCharacters)
+    ){
+
+        const person=
+            questionCharacters[key];
+
+        for(
+            const alias of person.aliases
+        ){
+
+            const cleanAlias=
+                normalizeQuestion(alias);
+
+            if(
+                q.includes(cleanAlias)
+            ){
+
+                return person;
+
+            }
+
+        }
+
+    }
+
+    return null;
+
+}
+
+
+/* =========================================================
+   RESPONDER PERSONAGEM
+========================================================= */
+
+function characterQuestionAnswer(person,question){
+
+    const q=
+        normalizeQuestion(question);
+
+    if(
+        questionContains(
+            q,
+            [
+                "idade",
+                "anos",
+                "age",
+                "old",
+                "edad",
+                "years"
+            ]
+        )
+    ){
+
+        if(person.age){
+
+            return person.age[currentLanguage];
+
+        }
+
+    }
+
+    if(
+        questionContains(
+            q,
+            [
+                "poder",
+                "poderes",
+                "power",
+                "ability",
+                "habilidade",
+                "tecnica",
+                "tecnicas"
+            ]
+        )
+    ){
+
+        if(person.power){
+
+            return person.power[currentLanguage];
+
+        }
+
+    }
+
+    if(
+        questionContains(
+            q,
+            [
+                "qual anime",
+                "qual o anime",
+                "de qual anime",
+                "que anime",
+                "which anime",
+                "what anime",
+                "que anime es",
+                "de que anime"
+            ]
+        )
+    ){
+
+        if(currentLanguage==="pt"){
+
+            return `${person.name} aparece em ${person.anime.pt}.`;
+
+        }
+
+        if(currentLanguage==="en"){
+
+            return `${person.name} appears in ${person.anime.en}.`;
+
+        }
+
+        return `${person.name} aparece en ${person.anime.es}.`;
+
+    }
+
+    if(
+        questionContains(
+            q,
+            [
+                "quem e",
+                "quem é",
+                "who is",
+                "quien es"
+            ]
+        )
+    ){
+
+        if(person.who){
+
+            return person.who[currentLanguage];
+
+        }
+
+    }
+
+    if(
+        questionContains(
+            q,
+            [
+                "irma",
+                "irmao",
+                "sister",
+                "brother",
+                "hermana",
+                "hermano"
+            ]
+        )
+    ){
+
+        if(person.sister){
+
+            return person.sister[currentLanguage];
+
+        }
+
+    }
+
+    if(person.who){
+
+        return person.who[currentLanguage];
+
+    }
+
+    return null;
+
+}
+
+
+/* =========================================================
+   PERGUNTAR
+========================================================= */
+
+function answerQuestion(){
+
+    const input=
+        document.getElementById(
+            "questionInput"
+        );
+
+    const answer=
+        document.getElementById(
+            "questionAnswer"
+        );
+
+    const text=
+        input.value.trim();
+
+    if(!text){
+
+        answer.textContent=
+            t("questionInitial");
+
+        return;
+
+    }
+
+    const normalized=
+        normalizeQuestion(text);
+
+
+    /* ============================
+       PRIMEIRO: PERSONAGEM
+    ============================ */
+
+    const person=
+        findQuestionCharacter(
+            text
+        );
+
+    if(person){
+
+        const characterAnswer=
+            characterQuestionAnswer(
+                person,
+                text
+            );
+
+        if(characterAnswer){
+
+            answer.textContent=
+                characterAnswer;
+
+            return;
+
+        }
+
+    }
+
+
+    /* ============================
+       SEGUNDO: ANIME
+    ============================ */
+
+    const anime=
+        animes.find(item=>{
+
+            const title=
+                normalizeQuestion(
+                    item.title
+                );
+
+            const search=
+                normalizeQuestion(
+                    item.search
+                );
+
+            return(
+                normalized.includes(title) ||
+                normalized.includes(search)
+            );
+
+        });
+
+
+    if(anime){
+
+        const animeAnswer=
+            animeQuestionAnswer(
+                anime,
+                text
+            );
+
+        if(animeAnswer){
+
+            answer.textContent=
+                animeAnswer;
+
+            return;
+
+        }
+
+    }
+
+
+    /* ============================
+       PERGUNTA ESPECÍFICA SOBRE
+       A IRMÃ DO TANJIRO
+    ============================ */
+
+    if(
+        normalized.includes("irma") &&
+        (
+            normalized.includes("tanjiro") ||
+            normalized.includes("tanjiro kamado")
+        )
+    ){
+
+        if(currentLanguage==="pt"){
+
+            answer.textContent=
+                "A irmã de Tanjiro Kamado é Nezuko Kamado.";
+
+        }else if(currentLanguage==="en"){
+
+            answer.textContent=
+                "Tanjiro Kamado's sister is Nezuko Kamado.";
+
+        }else{
+
+            answer.textContent=
+                "La hermana de Tanjiro Kamado es Nezuko Kamado.";
+
+        }
+
+        return;
+
+    }
+
+
+    /* ============================
+       RESPOSTA DESCONHECIDA
+    ============================ */
+
+    answer.textContent=
+        t("unknownQuestion");
+
+}
+
+
+function useQuestion(text){
+
+    const input=
+        document.getElementById(
+            "questionInput"
+        );
+
+    input.value=text;
+
+    answerQuestion();
+
+}
+
+
+function questionEnter(event){
+
+    if(event.key==="Enter"){
+
+        answerQuestion();
+
+    }
+
+}
+
+
+/* =========================================================
+   PESQUISA
+========================================================= */
+
+function toggleSearch(){
+
+    const area=
+        document.getElementById(
+            "searchArea"
+        );
+
+    area.classList.toggle("open");
+
+    if(
+        area.classList.contains("open")
+    ){
+
+        document
+            .getElementById(
+                "searchInput"
+            )
+            .focus();
+
+    }
+
+}
+
+
+function searchAnime(){
+
+    const text=
+        document
+            .getElementById(
+                "searchInput"
+            )
+            .value
+            .toLowerCase()
+            .trim();
+
+    const grid=
+        document.getElementById(
+            "animeGrid"
+        );
+
+    grid.innerHTML="";
+
+    animes
+        .filter(
+            anime=>
+                anime.title
+                    .toLowerCase()
+                    .includes(text)
+        )
+        .forEach(
+            anime=>{
+                grid.appendChild(
+                    createCard(anime)
+                );
+            }
+        );
+
+}
+
+
+/* =========================================================
+   CONFIGURAÇÕES
+========================================================= */
+
+function toggleSettings(){
+
+    document
+        .getElementById(
+            "settings"
+        )
+        .classList
+        .toggle("open");
+
+}
+
+
+function toggleTheme(){
+
+    document
+        .body
+        .classList
+        .toggle("light");
+
+}
+
+
+/* =========================================================
+   APLICAR IDIOMA
+========================================================= */
+
+function language(lang){
+
+    currentLanguage=lang;
+
+    document.documentElement.lang=
+        lang==="pt"
+        ? "pt-BR"
+        : lang==="en"
+        ? "en"
+        : "es";
+
+    applyLanguage();
+
+    renderHome();
+
+    if(currentAnime){
+
+        openAnime(
+            currentAnime
+        );
+
+    }
+
+}
+
+
+function applyLanguage(){
+
+    document
+        .getElementById("homeBtn")
+        .textContent=
+            t("home");
+
+    document
+        .getElementById("questionsBtn")
+        .textContent=
+            t("questions");
+
+    document
+        .getElementById("searchInput")
+        .placeholder=
+            t("search");
+
+    document
+        .getElementById("settingsTitle")
+        .textContent=
+            t("settings");
+
+    document
+        .getElementById("themeButton")
+        .textContent=
+            t("theme");
+
+    document
+        .getElementById("heroDescription")
+        .textContent=
+            t("hero");
+
+    document
+        .getElementById("animeSectionTitle")
+        .textContent=
+            t("anime");
+
+    document
+        .getElementById("backAnimeButton")
+        .textContent=
+            t("back");
+
+    document
+        .getElementById("backCharacterButton")
+        .textContent=
+            t("back");
+
+    document
+        .getElementById("seasonTitle")
+        .textContent=
+            t("seasons");
+
+    document
+        .getElementById("characterTitle")
+        .textContent=
+            t("characters");
+
+    document
+        .getElementById("labelAnime")
+        .textContent=
+            t("mainAnime");
+
+    document
+        .getElementById("labelJapanese")
+        .textContent=
+            t("japanese");
+
+    document
+        .getElementById("labelBirthday")
+        .textContent=
+            t("birthday");
+
+    document
+        .getElementById("labelAge")
+        .textContent=
+            t("age");
+
+    document
+        .getElementById("labelGender")
+        .textContent=
+            t("gender");
+
+    document
+        .getElementById("labelBlood")
+        .textContent=
+            t("blood");
+
+    document
+        .getElementById("labelVoice")
+        .textContent=
+            t("voice");
+
+    document
+        .getElementById("aboutTitle")
+        .textContent=
+            t("about");
+
+    document
+        .getElementById("otherTitle")
+        .textContent=
+            t("other");
+
+
+    /* ============================
+       PERGUNTAS
+    ============================ */
+
+    document
+        .getElementById("questionsTitle")
+        .textContent=
+            t("questionsTitle");
+
+    document
+        .getElementById("questionsSubtitle")
+        .textContent=
+            t("questionsSubtitle");
+
+    document
+        .getElementById("questionInput")
+        .placeholder=
+            t("questionPlaceholder");
+
+    document
+        .getElementById("questionButton")
+        .textContent=
+            t("ask");
+
+    document
+        .getElementById("questionExamplesTitle")
+        .textContent=
+            t("questionExamples");
+
+}
+
+
+/* =========================================================
+   INICIAR
+========================================================= */
+
+applyLanguage();
+
+renderHome();
+
+loadCovers();
+
+</script>
+
+</body>
+</html>
