@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANIMEWIKI</title>
+<title>Otanori</title>
 
 <style>
 *{
@@ -908,7 +908,7 @@ body.light .question-example{
     </div>
 
     <div class="logo">
-        ANIMEWIKI
+        Otanori
     </div>
 
     <div class="search-area" id="searchArea">
@@ -960,8 +960,7 @@ body.light .question-example{
         <div class="brand">
 
             <h1>
-                ANIME<br>
-                WIKI
+                Otanori
             </h1>
 
             <p id="heroDescription">
@@ -1062,7 +1061,7 @@ body.light .question-example{
 
             <p class="questions-subtitle"
                id="questionsSubtitle">
-                Pergunte sobre animes, personagens e informações do ANIMEWIKI.
+                Pergunte sobre animes, personagens e informações do Otanori.
             </p>
 
             <div class="question-box">
@@ -1234,10 +1233,6 @@ body.light .question-example{
 
 <script>
 
-/* =========================================================
-   IDIOMA
-========================================================= */
-
 let currentLanguage = "pt";
 
 const translations = {
@@ -1273,7 +1268,7 @@ const translations = {
         episodes:"episódios",
         season:"TEMP.",
         questionsTitle:"❓ Área de Perguntas",
-        questionsSubtitle:"Pergunte sobre animes, personagens e informações do ANIMEWIKI.",
+        questionsSubtitle:"Pergunte sobre animes, personagens e informações do Otanori.",
         questionPlaceholder:"Ex.: Qual a idade do Yuji?",
         ask:"Perguntar",
         questionInitial:"🤖 Faça uma pergunta sobre anime.",
@@ -1312,7 +1307,7 @@ const translations = {
         episodes:"episodes",
         season:"SEASON",
         questionsTitle:"❓ Question Area",
-        questionsSubtitle:"Ask about anime, characters and ANIMEWIKI information.",
+        questionsSubtitle:"Ask about anime, characters and Otanori information.",
         questionPlaceholder:"Example: How old is Yuji?",
         ask:"Ask",
         questionInitial:"🤖 Ask a question about anime.",
@@ -1351,7 +1346,7 @@ const translations = {
         episodes:"episodios",
         season:"TEMP.",
         questionsTitle:"❓ Área de Preguntas",
-        questionsSubtitle:"Pregunta sobre animes, personajes e información de ANIMEWIKI.",
+        questionsSubtitle:"Pregunta sobre animes, personajes e información de Otanori.",
         questionPlaceholder:"Ej.: ¿Cuántos años tiene Yuji?",
         ask:"Preguntar",
         questionInitial:"🤖 Haz una pregunta sobre anime.",
@@ -1365,10 +1360,6 @@ function t(key){
     return translations[currentLanguage][key];
 }
 
-
-/* =========================================================
-   ANIMES
-========================================================= */
 
 const animes = [
 
@@ -1585,10 +1576,6 @@ seasons:[25,25,10,13,12]
 ];
 
 
-/* =========================================================
-   NOMES DOS PERSONAGENS
-========================================================= */
-
 const characterNameFixes = {
 
 "Jin-U Seong":"Sung Jin-Woo",
@@ -1723,10 +1710,6 @@ function fixCharacterName(name){
     return characterNameFixes[clean] || clean;
 }
 
-
-/* =========================================================
-   DESCRIÇÕES DOS PERSONAGENS
-========================================================= */
 
 const characterDescriptions = {
 
@@ -1877,10 +1860,6 @@ es:"Shoyo Hinata es un jugador de voleibol decidido a superar su baja estatura y
 };
 
 
-/* =========================================================
-   TRADUÇÃO AUTOMÁTICA DAS DESCRIÇÕES
-========================================================= */
-
 const translationCache={};
 
 async function translateCharacterDescription(text){
@@ -1993,10 +1972,6 @@ async function getCharacterDescription(
 }
 
 
-/* =========================================================
-   CAPAS
-========================================================= */
-
 const coverMap={};
 
 async function loadCovers(){
@@ -2081,10 +2056,6 @@ async function loadCovers(){
 }
 
 
-/* =========================================================
-   PLACEHOLDER
-========================================================= */
-
 function placeholder(title){
 
     return "data:image/svg+xml;charset=UTF-8,"+
@@ -2114,10 +2085,6 @@ function placeholder(title){
 
 }
 
-
-/* =========================================================
-   CARDS
-========================================================= */
 
 function createCard(anime){
 
@@ -2167,10 +2134,6 @@ function createCard(anime){
 }
 
 
-/* =========================================================
-   HOME
-========================================================= */
-
 function renderHome(){
 
     const grid=
@@ -2186,10 +2149,6 @@ function renderHome(){
 
 }
 
-
-/* =========================================================
-   DECORAÇÃO
-========================================================= */
 
 function updateDecoration(){
 
@@ -2217,10 +2176,6 @@ function updateDecoration(){
 
 }
 
-
-/* =========================================================
-   ABRIR ANIME
-========================================================= */
 
 let currentAnime=null;
 
@@ -2279,10 +2234,6 @@ function openAnime(anime){
 
 }
 
-
-/* =========================================================
-   DESCRIÇÕES DOS ANIMES
-========================================================= */
 
 const descriptions={
 
@@ -2421,10 +2372,10 @@ function getDescription(title){
     if(!d){
 
         return currentLanguage==="en"
-            ? "Explore this anime on ANIMEWIKI."
+            ? "Explore this anime on Otanori."
             : currentLanguage==="es"
-            ? "Explora este anime en ANIMEWIKI."
-            : "Explore este anime no ANIMEWIKI.";
+            ? "Explora este anime en Otanori."
+            : "Explore este anime no Otanori.";
 
     }
 
@@ -2497,10 +2448,6 @@ function getGenres(genres){
 }
 
 
-/* =========================================================
-   TEMPORADAS
-========================================================= */
-
 function createSeasons(anime){
 
     const buttons=
@@ -2571,10 +2518,6 @@ function createSeasons(anime){
 }
 
 
-/* =========================================================
-   EPISÓDIOS
-========================================================= */
-
 function showEpisodes(count){
 
     const list=
@@ -2613,10 +2556,6 @@ function showEpisodes(count){
 
 }
 
-
-/* =========================================================
-   PERSONAGENS
-========================================================= */
 
 async function createCharacters(anime){
 
@@ -2888,10 +2827,6 @@ async function createCharacters(anime){
 }
 
 
-/* =========================================================
-   LIMPAR DESCRIÇÃO
-========================================================= */
-
 function cleanDescription(text){
 
     if(!text){
@@ -2909,10 +2844,6 @@ function cleanDescription(text){
 
 }
 
-
-/* =========================================================
-   DATA
-========================================================= */
 
 function formatBirthday(date){
 
@@ -2946,10 +2877,6 @@ function formatBirthday(date){
 
 }
 
-
-/* =========================================================
-   TRADUZIR ALGUNS CAMPOS DA API
-========================================================= */
 
 function translateGender(value){
 
@@ -3003,10 +2930,6 @@ function translateGender(value){
 
 }
 
-
-/* =========================================================
-   PERSONAGEM
-========================================================= */
 
 let previousAnime=null;
 
@@ -3256,10 +3179,6 @@ async function openCharacter(
 }
 
 
-/* =========================================================
-   VOLTAR PARA O ANIME
-========================================================= */
-
 function backToAnime(){
 
     document
@@ -3287,10 +3206,6 @@ function backToAnime(){
 
 }
 
-
-/* =========================================================
-   HOME
-========================================================= */
 
 function showHome(){
 
@@ -3326,10 +3241,6 @@ function showHome(){
 
 }
 
-
-/* =========================================================
-   ÁREA DE PERGUNTAS
-========================================================= */
 
 function showQuestions(){
 
@@ -3396,10 +3307,6 @@ function questionContains(text,words){
 
 }
 
-
-/* =========================================================
-   PERSONAGENS PARA PERGUNTAS
-========================================================= */
 
 const questionCharacters={
 
@@ -3972,10 +3879,6 @@ const questionCharacters={
 };
 
 
-/* =========================================================
-   PROTAGONISTAS DOS 21 ANIMES
-========================================================= */
-
 const animeProtagonists={
 
     "Demon Slayer":"Tanjiro Kamado",
@@ -4002,10 +3905,6 @@ const animeProtagonists={
 
 };
 
-
-/* =========================================================
-   TRADUÇÃO DE NOME DO ANIME NA RESPOSTA
-========================================================= */
 
 function animeQuestionAnswer(anime,question){
 
@@ -4056,17 +3955,17 @@ function animeQuestionAnswer(anime,question){
 
         if(currentLanguage==="pt"){
 
-            return `${anime.title} tem ${anime.episodes} episódios cadastrados no ANIMEWIKI.`;
+            return `${anime.title} tem ${anime.episodes} episódios cadastrados no Otanori.`;
 
         }
 
         if(currentLanguage==="en"){
 
-            return `${anime.title} has ${anime.episodes} episodes listed in ANIMEWIKI.`;
+            return `${anime.title} has ${anime.episodes} episodes listed in Otanori.`;
 
         }
 
-        return `${anime.title} tiene ${anime.episodes} episodios registrados en ANIMEWIKI.`;
+        return `${anime.title} tiene ${anime.episodes} episodios registrados en Otanori.`;
 
     }
 
@@ -4165,10 +4064,6 @@ function animeQuestionAnswer(anime,question){
 }
 
 
-/* =========================================================
-   ACHAR PERSONAGEM
-========================================================= */
-
 function findQuestionCharacter(question){
 
     const q=
@@ -4204,10 +4099,6 @@ function findQuestionCharacter(question){
 
 }
 
-
-/* =========================================================
-   RESPONDER PERSONAGEM
-========================================================= */
 
 function characterQuestionAnswer(person,question){
 
@@ -4344,10 +4235,6 @@ function characterQuestionAnswer(person,question){
 }
 
 
-/* =========================================================
-   PERGUNTAR
-========================================================= */
-
 function answerQuestion(){
 
     const input=
@@ -4376,10 +4263,6 @@ function answerQuestion(){
         normalizeQuestion(text);
 
 
-    /* ============================
-       PRIMEIRO: PERSONAGEM
-    ============================ */
-
     const person=
         findQuestionCharacter(
             text
@@ -4404,10 +4287,6 @@ function answerQuestion(){
 
     }
 
-
-    /* ============================
-       SEGUNDO: ANIME
-    ============================ */
 
     const anime=
         animes.find(item=>{
@@ -4450,11 +4329,6 @@ function answerQuestion(){
     }
 
 
-    /* ============================
-       PERGUNTA ESPECÍFICA SOBRE
-       A IRMÃ DO TANJIRO
-    ============================ */
-
     if(
         normalized.includes("irma") &&
         (
@@ -4484,10 +4358,6 @@ function answerQuestion(){
 
     }
 
-
-    /* ============================
-       RESPOSTA DESCONHECIDA
-    ============================ */
 
     answer.textContent=
         t("unknownQuestion");
@@ -4519,10 +4389,6 @@ function questionEnter(event){
 
 }
 
-
-/* =========================================================
-   PESQUISA
-========================================================= */
 
 function toggleSearch(){
 
@@ -4584,10 +4450,6 @@ function searchAnime(){
 }
 
 
-/* =========================================================
-   CONFIGURAÇÕES
-========================================================= */
-
 function toggleSettings(){
 
     document
@@ -4609,10 +4471,6 @@ function toggleTheme(){
 
 }
 
-
-/* =========================================================
-   APLICAR IDIOMA
-========================================================= */
 
 function language(lang){
 
@@ -4743,10 +4601,6 @@ function applyLanguage(){
             t("other");
 
 
-    /* ============================
-       PERGUNTAS
-    ============================ */
-
     document
         .getElementById("questionsTitle")
         .textContent=
@@ -4774,10 +4628,6 @@ function applyLanguage(){
 
 }
 
-
-/* =========================================================
-   INICIAR
-========================================================= */
 
 applyLanguage();
 
